@@ -1,0 +1,9 @@
+class Component {
+	constructor() {
+
+	}
+
+	edit () {
+
+	}
+}

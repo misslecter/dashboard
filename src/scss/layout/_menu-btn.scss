@@ -1,0 +1,55 @@
+header button {
+
+	width: 30px;
+	height: 25px;
+	position: relative;
+
+	span {
+
+		width: 100%;
+		height: 5px;
+		background: #000;
+
+		display: block;
+		position: absolute;
+		left: 0;
+
+		transform: rotate(0deg);
+		transition: $transition;
+
+		&:nth-child(1) {
+			top: 0;
+		}
+
+		&:nth-child(2), &:nth-child(3) {
+			top: 10px;
+		}
+
+		&:nth-child(4) {
+			top: 20px;
+		}
+	}
+
+	&.nav-opened span {
+
+		&:nth-child(1) {
+			top: 18px;
+			width: 0%;
+			left: 50%;
+		}
+
+		&:nth-child(2) {
+			transform: rotate(45deg);
+		}
+
+		&:nth-child(3) {
+			transform: rotate(-45deg);
+		}
+
+		&:nth-child(4) {
+			top: 18px;
+			width: 0;
+			left: 50%;
+		}
+	}
+}

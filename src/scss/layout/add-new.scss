@@ -1,0 +1,60 @@
+.add-new {
+	position: absolute;
+	bottom: 3em;
+	right: 3em;
+
+	button {
+		background: $new-btn-color;
+		color: #fff;
+		box-shadow: 0 0 12px 0 rgba(0,0,0,0.35);
+
+		width: 8em;
+		height: 8em;
+		border-radius: 50%;
+
+		float: right;
+		position: relative;
+		z-index: 1;
+
+		&:hover, &.active {
+			background: lighten($new-btn-color, 5%);
+			box-shadow: none;
+		}
+	}
+
+	&__choice {
+
+		display: none;
+
+		ul {
+			margin-right: 1em;
+		}
+
+		li {
+			margin: 1em 0;
+
+			transform: translateY(100%);
+			transition: $transition;
+		}
+
+		a {
+			display: block;
+			padding: 1em;
+			background: $new-btn-color;
+			border-radius: 12px;
+			text-align: right;
+
+			color: #fff;
+			text-decoration: none;
+
+			&:hover, &:active, &:focus {
+				background: lighten($new-btn-color, 5%);
+			}
+		}
+
+		&.opened li {
+			transform: none;
+		}
+	}
+
+}

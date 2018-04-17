@@ -1,1 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower|Open+Sans:300,400,700');
+
+@import "variables";
+@import "defaults";
+
+@import "vendor/font/fontawesome";
+@import "vendor/font/fa-solid";
+
+
+@import "layout/header";
+@import "layout/nav";
+@import "layout/main";
+@import "layout/add-new";
+
+
 @import "modules/plus-button";
+
+

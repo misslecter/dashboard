@@ -1,7 +1,20 @@
-import PlusButton from "./modules/PlusButton";
+import App from "./modules/App";
 
-document.addEventListener("DOMContentLoaded", () => {
+const menuBtn = $('header button'),
+	plusBtn = $('.add-new button'),
+	addNewBtns = $('.add-new__choice a');
 
-    new PlusButton();
+$(document).ready(() => {
+
+	const app = new App();
+
+	// Open navigation
+	menuBtn.click((e) => app.handleNavBtnClick(e.currentTarget));
+
+	// Show add new menu
+	plusBtn.click((e) => app.handlePlusBtnClick(e.currentTarget));
+
+	// Handle adding new stuff
+	addNewBtns.map((index, el) => $(el).click((e) => app.handleAddNewBtnClick(e.currentTarget)));
 
 });
