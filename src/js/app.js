@@ -8,6 +8,9 @@ $(document).ready(() => {
 
 	const app = new App();
 
+	// Load data from LS
+	app.loadData();
+
 	// Open navigation
 	menuBtn.click((e) => app.handleNavBtnClick(e.currentTarget));
 

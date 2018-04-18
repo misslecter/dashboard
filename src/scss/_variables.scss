@@ -2,6 +2,8 @@ $transition: all .25s ease-in-out;
 
 $main-bg:        papayawhip;
 
+$text-color: #151515;
+
 $header-bg:      rgba(white, .7);
 $header-height: 4em;
 
@@ -14,4 +16,7 @@ $font-default: 'Open Sans', sans-serif;
 $font-handwritten: 'Indie Flower', cursive;
 $fa-font-path:                "../src/fonts";
 
-$text-color: #151515;
+// Note
+$note-bg: palegoldenrod;
+$note-w: 320px;
+$note-h: 320px;

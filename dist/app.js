@@ -15,6 +15,9 @@ $(document).ready(function () {
 
 	var app = new _modulesApp2['default']();
 
+	// Load data from LS
+	app.loadData();
+
 	// Open navigation
 	menuBtn.click(function (e) {
 		return app.handleNavBtnClick(e.currentTarget);
@@ -54,7 +57,7 @@ var App = (function () {
 	function App() {
 		_classCallCheck(this, App);
 
-		this.notes = [];
+		this.notes = {};
 		this.todos = [];
 		this.counters = [];
 		this.photos = [];
@@ -73,18 +76,81 @@ var App = (function () {
 	App.prototype.handleAddNewBtnClick = function handleAddNewBtnClick(clickedElement) {
 		switch ($(clickedElement).data('target')) {
 			case 'note':
-				this.addNewNote();
+				this.addNote();
 				break;
 		}
 	};
 
-	App.prototype.addNewNote = function addNewNote() {
-		var note = new _Note2['default']();
-		this.appendToMain(note.render());
+	// NOTES //
+
+	App.prototype.addNote = function addNote() {
+		var data = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+
+		var note = undefined;
+
+		if (data != null) {
+			note = new _Note2['default'](data.uid, data.text, data.element, data.content, data.removeBtn);
+		} else {
+			note = new _Note2['default'](this.generateId());
+		}
+
+		// set to global object
+		this.setNote(note);
+
+		// update html
+		this.updateHtml(note);
+
+		note.handleUpdates(this);
 	};
 
-	App.prototype.appendToMain = function appendToMain(html) {
-		main.append(html);
+	App.prototype.setNote = function setNote(note) {
+
+		// let a = [];
+		// a[123] = 321;
+		// this.notes = map;
+
+		// console.log(a);
+		// console.log(instanceof map);
+
+		// map.set(1, 2);
+		// this.notes.toString();
+		// this.notes.set(1, 2);
+		// this.notes.set(note.uid, note);
+		this.notes[note.uid] = note;
+		this.updateStorage();
+	};
+
+	App.prototype.removeNote = function removeNote(note) {
+		// this.notes.remove(note);
+		delete this.notes[note.uid];
+		this.updateStorage();
+	};
+
+	// pool
+
+	App.prototype.updateStorage = function updateStorage() {
+		localStorage.setItem('notes', JSON.stringify(this.notes));
+	};
+
+	App.prototype.loadData = function loadData() {
+		var _this = this;
+
+		// localStorage.clear();
+		var notes = localStorage.getItem('notes');
+		if (notes) {
+			this.notes = JSON.parse(notes);
+			$.each(this.notes, function (key, value) {
+				return _this.addNote(value);
+			});
+		}
+	};
+
+	App.prototype.updateHtml = function updateHtml(el) {
+		main.append(el.render());
+	};
+
+	App.prototype.generateId = function generateId() {
+		return Math.floor(1000 + Math.random() * 9000);
 	};
 
 	return App;
@@ -101,16 +167,54 @@ exports.__esModule = true;
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var Note = (function () {
-	function Note() {
+	function Note(uid) {
+		var t = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
+		var el = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+		var c = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
+		var r = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
+
 		_classCallCheck(this, Note);
 
-		this.text = '';
+		this.uid = uid;
+		this.text = t;
+		this.element = el;
+		this.content = c;
+		this.removeBtn = r;
 	}
 
 	Note.prototype.render = function render() {
-		var markup = '<div class="person">\n\t\t<h2>\n\t\t' + this.text + '\n\t\t</h2>\n\t\t\t</div>';
+		var element = $('<div id="note-' + this.uid + '" class="module note" draggable="true"></div>');
+		var content = $('<div class="content" contenteditable="true">' + this.text + '</div>');
+		var i = $('<i class="fa fa-times-circle fa-lg"></i>');
 
-		return markup;
+		element.append(content);
+		element.append(i);
+
+		return element;
+	};
+
+	Note.prototype.handleUpdates = function handleUpdates(app) {
+		var _this = this;
+
+		// set elements
+		this.element = $('#note-' + this.uid);
+		this.content = this.element.find('.content');
+		this.removeBtn = this.element.find('i');
+
+		// focus on editable content
+		this.content.focus();
+
+		// handle end of input
+		this.content.on('input', function (e) {
+			_this.text = $(e.currentTarget).text(); // set new text
+			app.setNote(_this); // update globally
+		});
+
+		// handle removing
+		this.removeBtn.on('click', function (e) {
+			_this.element.remove(); // remove from HTML
+			app.removeNote(_this); // remove globally
+		});
 	};
 
 	return Note;

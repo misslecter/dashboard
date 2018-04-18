@@ -1,0 +1,26 @@
+@import "note";
+
+.module {
+	margin: 4em;
+	position: relative;
+
+	display: inline-block;
+
+	&:hover i {
+		opacity: 1;
+	}
+
+	i {
+		opacity: 0;
+		position: absolute;
+		top: 0;
+		right: 0;
+		margin: 20px;
+
+		transition: $transition;
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
+}
