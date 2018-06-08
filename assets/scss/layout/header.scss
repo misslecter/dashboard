@@ -5,11 +5,17 @@ header {
 	height: $header-height;
 
 	position: fixed;
-	background: $header-bg;
+	background: transparent;
 
 	display: flex;
 	align-items: center;
 
 	z-index: 1;
 	padding: 0 2em;
+
+	transition: $transition;
+
+	&.nav-opened {
+		margin-left: $nav-width;
+	}
 }

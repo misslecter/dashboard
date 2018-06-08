@@ -4,11 +4,15 @@ header button {
 	height: 25px;
 	position: relative;
 
+	&:hover span {
+		background: $accent-color;
+	}
+
 	span {
 
 		width: 100%;
 		height: 5px;
-		background: #000;
+		background: $text-color;
 
 		display: block;
 		position: absolute;

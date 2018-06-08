@@ -1,0 +1,43 @@
+nav {
+
+	position: absolute;
+	width: $nav-width;
+	height: 100vh;
+	background: $nav-bg;
+	top: 0;
+	left: 0;
+	transform: translateX(-100%);
+
+	z-index: 10;
+
+	transition: $transition;
+
+	&.opened {
+		transform: none;
+	}
+
+	.logo {
+		display: flex;
+		justify-content: center;
+		padding: 2em 0 0;
+		border-bottom: 1px solid white;
+		margin: 0 4em 2em;
+
+		img {
+			height: 4em;
+		}
+	}
+
+	a {
+		color: #fff;
+		text-transform: uppercase;
+		font-weight: 700;
+		text-decoration: none;
+		padding: 1em 2em;
+		display: block;
+
+		&:hover {
+			background: darken($nav-bg, 10%);
+		}
+	}
+}

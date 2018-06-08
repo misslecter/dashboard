@@ -1,6 +1,8 @@
 main {
 
-	background: $main-bg;
+	background-size: cover;
+	background: url('../images/bg.png') no-repeat 50%;
+
 	padding-top: $header-height;
 	height: calc(100vh - #{$header-height});
 

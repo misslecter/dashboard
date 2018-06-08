@@ -4,7 +4,7 @@
 	right: 3em;
 
 	button {
-		background: $new-btn-color;
+		background: $accent-color;
 		color: #fff;
 		box-shadow: 0 0 12px 0 rgba(0,0,0,0.35);
 
@@ -17,7 +17,7 @@
 		z-index: 1;
 
 		&:hover, &.active {
-			background: lighten($new-btn-color, 5%);
+			background: lighten($accent-color, 5%);
 			box-shadow: none;
 		}
 	}
@@ -25,10 +25,6 @@
 	&__choice {
 
 		display: none;
-
-		ul {
-			margin-right: 1em;
-		}
 
 		li {
 			margin: 1em 0;
@@ -40,15 +36,16 @@
 		a {
 			display: block;
 			padding: 1em;
-			background: lighten($new-btn-color, 5%);
+			background: $accent-color;
 			border-radius: 12px;
-			text-align: right;
+			text-align: center;
+			font-weight: 700;
 
 			color: #fff;
 			text-decoration: none;
 
 			&:hover, &:active, &:focus {
-				background: $new-btn-color;
+				background: lighten($accent-color, 5%);
 			}
 		}
 

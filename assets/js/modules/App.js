@@ -1,6 +1,7 @@
 import Note from "./Note";
 const main = $('main'),
 	nav = $('nav'),
+	header = $('header'),
 	addNewNav = $('.add-new__choice');
 
 
@@ -16,6 +17,7 @@ export default class App {
 
 	handleNavBtnClick(clickedElement) {
 		$(clickedElement).toggleClass('nav-opened');
+		header.toggleClass('nav-opened');
 		nav.toggleClass('opened');
 	}
 	

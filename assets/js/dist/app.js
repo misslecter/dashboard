@@ -51,6 +51,7 @@ var _Note2 = _interopRequireDefault(_Note);
 
 var main = $('main'),
     nav = $('nav'),
+    header = $('header'),
     addNewNav = $('.add-new__choice');
 
 var App = (function () {
@@ -65,6 +66,7 @@ var App = (function () {
 
 	App.prototype.handleNavBtnClick = function handleNavBtnClick(clickedElement) {
 		$(clickedElement).toggleClass('nav-opened');
+		header.toggleClass('nav-opened');
 		nav.toggleClass('opened');
 	};
 

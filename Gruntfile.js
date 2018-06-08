@@ -10,17 +10,17 @@ module.exports = function (grunt) {
                     ]
                 },
                 files: {
-                    "./dist/app.js": ["./src/js/app.js"]
+                    "./assets/js/dist/app.js": ["./assets/js/app.js"]
                 }
             }
         },
         watch: {
             css: {
-                files: ['./src/scss/*.scss', "./src/scss/**/*.scss"],
+                files: ['./assets/scss/*.scss', "./assets/scss/**/*.scss"],
                 tasks: ['sass']
             },
             js: {
-                files: ["./src/js/*.js", "./src/js/**/*.js"],
+                files: ["./assets/js/*.js", "./assets/js/**/*.js"],
                 tasks: ["browserify"]
             }
         },
@@ -30,7 +30,7 @@ module.exports = function (grunt) {
                     style: 'compressed'
                 },
                 files: {
-                    './dist/app.css': './src/scss/app.scss'
+                    './assets/css/app.css': './assets/scss/app.scss'
                 }
             }
         },

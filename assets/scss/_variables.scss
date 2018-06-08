@@ -1,22 +1,20 @@
 $transition: all .25s ease-in-out;
 
-$main-bg:        papayawhip;
-
 $text-color: #151515;
+$accent-color: #ff5722;
 
-$header-bg:      rgba(white, .7);
 $header-height: 4em;
 
-$nav-width: 320px;
-
-$new-btn-color: green;
+$nav-width: 420px;
+$nav-bg: #607D8B;
 
 // Fonts
 $font-default: 'Open Sans', sans-serif;
 $font-handwritten: 'Indie Flower', cursive;
-$fa-font-path:                "../src/fonts";
+$fa-font-path: "../fonts";
 
 // Note
-$note-bg: palegoldenrod;
+$note-bg: #fffff0;
 $note-w: 320px;
 $note-h: 320px;
+
