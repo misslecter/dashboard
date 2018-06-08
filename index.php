@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard</title>
     <link rel="stylesheet" href="./assets/css/app.css">
 </head>
 <body>
@@ -19,7 +20,7 @@
 <nav>
 
     <div class="logo">
-        <img src="./assets/images/logo.svg">
+        <?php include 'assets/images/logo.svg';?>
     </div>
 
     <ul>

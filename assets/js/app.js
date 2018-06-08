@@ -1,3 +1,4 @@
+import Svg from "./modules/Svg";
 import App from "./modules/App";
 
 const menuBtn = $('header button'),
@@ -5,6 +6,8 @@ const menuBtn = $('header button'),
 	addNewBtns = $('.add-new__choice a');
 
 $(document).ready(() => {
+
+	Svg();
 
 	const app = new App();
 

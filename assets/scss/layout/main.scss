@@ -1,10 +1,10 @@
 main {
 
 	background-size: cover;
-	background: url('../images/bg.png') no-repeat 50%;
+	background: url('../images/bg.png') 50%;
 
 	padding-top: $header-height;
-	height: calc(100vh - #{$header-height});
+	height: 100vh;
 
 	overflow-x: scroll;
 	overflow-y: hidden;

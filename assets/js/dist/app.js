@@ -1,7 +1,11 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-'use strict';
+"use strict";
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _modulesSvg = require("./modules/Svg");
+
+var _modulesSvg2 = _interopRequireDefault(_modulesSvg);
 
 var _modulesApp = require("./modules/App");
 
@@ -13,7 +17,9 @@ var menuBtn = $('header button'),
 
 $(document).ready(function () {
 
-	var app = new _modulesApp2['default']();
+	_modulesSvg2["default"]();
+
+	var app = new _modulesApp2["default"]();
 
 	// Load data from LS
 	app.loadData();
@@ -36,7 +42,7 @@ $(document).ready(function () {
 	});
 });
 
-},{"./modules/App":2}],2:[function(require,module,exports){
+},{"./modules/App":2,"./modules/Svg":4}],2:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -223,6 +229,31 @@ var Note = (function () {
 })();
 
 exports['default'] = Note;
+module.exports = exports['default'];
+
+},{}],4:[function(require,module,exports){
+'use strict';
+
+exports.__esModule = true;
+var svg = $('.logo > svg');
+
+var init = function init() {
+
+	svg.on('mouseover', function (e) {
+
+		var txt = svg.find('text');
+		txt.attr('fill', '#f8bbd0');
+		txt.attr('transform', 'translate(0 220)');
+	});
+
+	svg.on('mouseout', function (e) {
+		var txt = svg.find('text');
+		txt.attr('fill', '#fff');
+		txt.attr('transform', 'translate(0 282)');
+	});
+};
+
+exports['default'] = init;
 module.exports = exports['default'];
 
 },{}]},{},[1]);

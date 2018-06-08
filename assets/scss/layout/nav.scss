@@ -1,7 +1,7 @@
 nav {
 
 	position: absolute;
-	width: $nav-width;
+	width: calc(100vw - 4em - 30px);
 	height: 100vh;
 	background: $nav-bg;
 	top: 0;
@@ -11,6 +11,10 @@ nav {
 	z-index: 10;
 
 	transition: $transition;
+
+	@media (min-width: $screen-md-min) {
+		width: $nav-width;
+	}
 
 	&.opened {
 		transform: none;
@@ -25,6 +29,16 @@ nav {
 
 		img {
 			height: 4em;
+		}
+
+		svg {
+			padding-top: 1em;
+			height: 5em;
+			cursor: pointer;
+
+			text, tspan {
+				transition: $transition;
+			}
 		}
 	}
 
