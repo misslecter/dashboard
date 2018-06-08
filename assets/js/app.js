@@ -1,5 +1,7 @@
 import Svg from "./modules/Svg";
 import Form from "./modules/Form";
+import Time from "./modules/time";
+
 import App from "./modules/App";
 
 const menuBtn = $('header button'),
@@ -11,6 +13,7 @@ $(document).ready(() => {
 
 	Svg();
 	Form();
+	Time();
 
 	// set visible
 	if (location.hash == '') {

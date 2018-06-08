@@ -1,0 +1,38 @@
+#contact form {
+
+	display: flex;
+	flex-direction: column;
+	width: 60%;
+
+	input {
+		background: transparent;
+		border-bottom: 3px solid $nav-bg;
+		border-top: none;
+		border-left: none;
+		border-right: none;
+
+		padding: 1em;
+		font-size: 1em;
+
+		width: 100%;
+
+		&::-webkit-input-placeholder, &::-moz-placeholder, &:-ms-input-placeholder {
+			line-height: 3;
+		}
+
+		& + label {
+			visibility: hidden;
+			transform: none;
+			transition: $transition;
+			padding-left: 2em;
+		}
+
+		&:focus {
+			& + label {
+				visibility: visible;
+				transform: translate(0, (calc(-100% - 30px)));
+			}
+		}
+	}
+
+}

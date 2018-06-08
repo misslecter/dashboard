@@ -28,4 +28,27 @@ header {
 			}
 		}
 	}
+
+	.clock {
+		font-size: 3.4em;
+		font-weight: 300;
+
+		@media (max-width: $screen-sm-max) {
+			display: none;
+		}
+	}
+
+	a {
+		text-decoration: none;
+		color: $text-color;
+		font-weight: 700;
+		border-bottom: 1px solid;
+		transition: $transition;
+
+		&:hover {
+			color: $accent-color;
+			text-decoration: none;
+			border-bottom: none;
+		}
+	}
 }

@@ -1,4 +1,5 @@
 @import "note";
+@import "todo";
 
 .module {
 	margin: 4em;
@@ -22,5 +23,9 @@
 		&:hover {
 			cursor: pointer;
 		}
+	}
+
+	*:focus {
+		outline-color: $pink;
 	}
 }

@@ -11,6 +11,10 @@ var _modulesForm = require("./modules/Form");
 
 var _modulesForm2 = _interopRequireDefault(_modulesForm);
 
+var _modulesTime = require("./modules/time");
+
+var _modulesTime2 = _interopRequireDefault(_modulesTime);
+
 var _modulesApp = require("./modules/App");
 
 var _modulesApp2 = _interopRequireDefault(_modulesApp);
@@ -24,6 +28,7 @@ $(document).ready(function () {
 
 	_modulesSvg2["default"]();
 	_modulesForm2["default"]();
+	_modulesTime2["default"]();
 
 	// set visible
 	if (location.hash == '') {
@@ -67,7 +72,7 @@ $(document).ready(function () {
 	});
 });
 
-},{"./modules/App":2,"./modules/Form":3,"./modules/Svg":5}],2:[function(require,module,exports){
+},{"./modules/App":2,"./modules/Form":3,"./modules/Svg":5,"./modules/time":6}],2:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -336,5 +341,29 @@ var init = function init() {
 
 exports['default'] = init;
 module.exports = exports['default'];
+
+},{}],6:[function(require,module,exports){
+"use strict";
+
+exports.__esModule = true;
+var init = function init() {
+	showTime();
+	setInterval(showTime, 60000);
+};
+
+var showTime = function showTime() {
+	var d = new Date();
+	$('.clock').text(addZero(d.getHours()) + ":" + addZero(d.getMinutes()));
+};
+
+var addZero = function addZero(i) {
+	if (i < 10) {
+		i = "0" + i;
+	}
+	return i;
+};
+
+exports["default"] = init;
+module.exports = exports["default"];
 
 },{}]},{},[1]);
