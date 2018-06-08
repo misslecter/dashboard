@@ -7,17 +7,42 @@ var _modulesSvg = require("./modules/Svg");
 
 var _modulesSvg2 = _interopRequireDefault(_modulesSvg);
 
+var _modulesForm = require("./modules/Form");
+
+var _modulesForm2 = _interopRequireDefault(_modulesForm);
+
 var _modulesApp = require("./modules/App");
 
 var _modulesApp2 = _interopRequireDefault(_modulesApp);
 
 var menuBtn = $('header button'),
     plusBtn = $('.add-new button'),
-    addNewBtns = $('.add-new__choice a');
+    addNewBtns = $('.add-new__choice a'),
+    link = $('header .link a');
 
 $(document).ready(function () {
 
 	_modulesSvg2["default"]();
+	_modulesForm2["default"]();
+
+	// set visible
+	if (location.hash == '') {
+		location.hash = '#dashboard';
+	} else {
+		$('.link-to-dashboard').toggle();
+		$('.link-to-contact').toggle();
+	}
+
+	link.on('click', function (e) {
+		$('.link-to-dashboard').toggle();
+		$('.link-to-contact').toggle();
+
+		// $('#dashboard').animate({
+		// 	width: "toggle"
+		// });
+		//
+		$('#contact').toggleClass('closed');
+	});
 
 	var app = new _modulesApp2["default"]();
 
@@ -42,7 +67,7 @@ $(document).ready(function () {
 	});
 });
 
-},{"./modules/App":2,"./modules/Svg":4}],2:[function(require,module,exports){
+},{"./modules/App":2,"./modules/Form":3,"./modules/Svg":5}],2:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -167,7 +192,63 @@ var App = (function () {
 exports['default'] = App;
 module.exports = exports['default'];
 
-},{"./Note":3}],3:[function(require,module,exports){
+},{"./Note":4}],3:[function(require,module,exports){
+'use strict';
+
+exports.__esModule = true;
+var cform = $('form');
+
+var init = function init() {
+	// Get the form.
+	var form = $('#ajax-contact');
+
+	// Get the messages div.
+	var formMessages = $('#form-messages');
+
+	// Set up an event listener for the contact form.
+	$(form).submit(function (event) {
+		// Stop the browser from submitting the form.
+		event.preventDefault();
+
+		// Serialize the form data.
+		var formData = $(form).serialize();
+
+		// Submit the form using AJAX.
+		$.ajax({
+			type: 'POST',
+			url: $(form).attr('action'),
+			data: formData
+		}).done(function (response) {
+			// Make sure that the formMessages div has the 'success' class.
+			$(formMessages).removeClass('error');
+			$(formMessages).addClass('success');
+
+			// Set the message text.
+			$(formMessages).text(response);
+
+			// Clear the form.
+			$('#name').val('');
+			$('#email').val('');
+			$('#message').val('');
+		}).fail(function (data) {
+			// Make sure that the formMessages div has the 'error' class.
+			$(formMessages).removeClass('success');
+			$(formMessages).addClass('error');
+
+			// Set the message text.
+			if (data.responseText !== '') {
+				$(formMessages).text(data.responseText);
+			} else {
+				$(formMessages).text('Oops! An error occured and your message could not be sent.');
+			}
+		});
+	});
+};
+
+exports['default'] = init;
+module.exports = exports['default'];
+
+},{}],4:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -231,7 +312,7 @@ var Note = (function () {
 exports['default'] = Note;
 module.exports = exports['default'];
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;

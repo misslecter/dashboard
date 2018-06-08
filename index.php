@@ -15,6 +15,11 @@
         <span></span>
         <span></span>
     </button>
+
+    <div class="link">
+        <a href="#" class="link-to-contact">Contact</a>
+        <a href="#" class="link-to-dashboard" style="display: none;">Go back</a>
+    </div>
 </header>
 
 <nav>
@@ -34,7 +39,7 @@
     </ul>
 </nav>
 
-<main>
+<main id="dashboard">
 
     <!--<div class="module todo" draggable="true" >-->
         <!--Todo-->
@@ -47,20 +52,51 @@
     <!--<div class="module photo" draggable="true" >-->
         <!--Photo-->
     <!--</div>-->
+
+    <div class="add-new">
+        <div class="add-new__choice">
+            <ul>
+                <li><a href="#" data-target="note">Note</a></li>
+                <li><a href="#" data-target="todo">Todo</a></li>
+                <li><a href="#" data-target="counter">Counter</a></li>
+                <li><a href="#" data-target="photo">Photo</a></li>
+            </ul>
+        </div>
+        <button><i class="fa fa-plus fa-3x"></i></button>
+    </div>
 </main>
 
-<div class="add-new">
-    <div class="add-new__choice">
-        <ul>
-            <li><a href="#" data-target="note">Note</a></li>
-            <li><a href="#" data-target="todo">Todo</a></li>
-            <li><a href="#" data-target="counter">Counter</a></li>
-            <li><a href="#" data-target="photo">Photo</a></li>
-        </ul>
-    </div>
-    <button><i class="fa fa-plus fa-3x"></i></button>
-</div>
 
+
+<section class="contact closed" id="contact">
+
+    <form id="ajax-contact" method="post" action="send-mail.php">
+        <div class="field">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="field">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="field">
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+        </div>
+
+        <div class="field">
+            <button type="submit">Send</button>
+        </div>
+    </form>
+
+    <div id="form-messages"></div>
+
+    <div class="paper"></div>
+<!--    <div class="pen"></div>-->
+
+</section>
 
 
 

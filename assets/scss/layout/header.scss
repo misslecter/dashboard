@@ -9,19 +9,23 @@ header {
 
 	display: flex;
 	align-items: center;
-	justify-content: flex-start;
+	justify-content: space-between;
 
-	z-index: 1;
+	z-index: 10;
 	padding: 0 2em;
 
 	transition: $transition;
 
 	&.nav-opened {
-		margin-left: $nav-width;
+		padding-left: calc(#{$nav-width} + 2em);
 
 		@media (max-width: $screen-sm-max) {
-			margin: 0;
+			padding-left: 2em;
 			justify-content: flex-end;
+
+			.link {
+				display: none;
+			}
 		}
 	}
 }
