@@ -13,8 +13,24 @@ $(document).ready(() => {
 
 	const app = new App();
 
-	// Load data from LS
-	app.loadData();
+	// set visible
+	if(localStorage.getItem('welcomeClosed') == 1) {
+		location.hash = location.hash == '' ? '#dashboard' : location.hash;
+
+		// Load data from LS
+		app.loadData();
+	} else {
+		location.hash = '#welcome';
+	}
+
+	$('#welcome a').on('click', (e) => {
+		localStorage.clear();
+		localStorage.setItem('welcomeClosed', 1);
+
+		if(localStorage.getItem('sampleLoaded') != 1 && $(e.currentTarget).hasClass('sample')) {
+			app.loadSampleData();
+		}
+	});
 
 	// Open navigation
 	menuBtn.click((e) => app.handleNavBtnClick(e.currentTarget));
@@ -32,18 +48,5 @@ $(document).ready(() => {
 	Form();
 	Time();
 
-	// set visible
-	if(localStorage.getItem('welcomeClosed') == 1) {
-		location.hash = location.hash == '' ? '#dashboard' : location.hash;
-	} else {
-		location.hash = '#welcome';
-	}
 
-	$('#welcome a').on('click', (e) => {
-		localStorage.setItem('welcomeClosed', 1);
-
-		if($(e.currentTarget).hasClass('sample')) {
-			app.loadSampleData();
-		}
-	});
 });

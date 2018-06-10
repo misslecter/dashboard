@@ -204,7 +204,7 @@ export default class App {
 	}
 
 	loadSampleData() {
-		localStorage.clear();
+
 		this.addNote({"uid": this.generateId(), "text": "Tact is the art of making a point without making an enemy."});
 		this.addNote({"uid": this.generateId(), "text": "What animal represents Scotland?<br>The unicorn is the national animal of Scotland. The Royal Coat of Arms of Scotland, used prior to 1603 by the Kings of Scotland was supported by two unicorns and the current royal coat of arms of the United Kingdom is supported by a unicorn for Scotland along with a lion for England."});
 
@@ -216,5 +216,7 @@ export default class App {
 		this.addTodo({"uid":6686,"title":"Summer plans","items":[{"text":"move to new apartment","checked":false,"id":"6686-0"},{"text":"go for holiday","checked":false,"id":"6686-1"},{"text":"be awesome!","checked":true,"id":"6686-2"}]});
 
 		this.addTodo({"uid":2506,"title":"New clothes","items":[{"text":"shorts","checked":false,"id":"2506-0"},{"text":"skirts","checked":false,"id":"2506-1"},{"text":"shoes","checked":false,"id":"2506-2"}]});
+
+		localStorage.setItem('sampleLoaded', 1);
 	}
 }

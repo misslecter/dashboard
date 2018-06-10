@@ -72,8 +72,7 @@ export default class Todo {
 		this.items.forEach((i) => {
 			// handle checking items
 			$("#item" + i.id).on('click', (e) => {
-				i.checked = !i.checked;
-				app.setObject('todos', this); // update globally
+				this.updateCheckedState(i, app);
 			});
 
 			// handle removing items
@@ -93,6 +92,12 @@ export default class Todo {
 		});
 	}
 
+	updateCheckedState(i, app) {
+		i.checked = !i.checked;
+		console.log(this.items);
+		app.setObject('todos', this); // update globally
+	}
+
 	addItem(app, text) {
 		let item = new TodoItem(text, false, this.uid + "-" + this.items.length);
 		this.items.push(item);
@@ -101,6 +106,13 @@ export default class Todo {
 		ul.append(this.renderItem(item));
 
 		app.setObject('todos', this); // update globally
+
+		// set listener
+		$("#item" + item.id).on('click', (e) => {
+			this.updateCheckedState(item, app);
+		});
+
+		console.log(this.items);
 	}
 
 	renderItem(item) {

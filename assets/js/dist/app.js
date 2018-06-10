@@ -28,8 +28,24 @@ $(document).ready(function () {
 
 	var app = new _appApp2["default"]();
 
-	// Load data from LS
-	app.loadData();
+	// set visible
+	if (localStorage.getItem('welcomeClosed') == 1) {
+		location.hash = location.hash == '' ? '#dashboard' : location.hash;
+
+		// Load data from LS
+		app.loadData();
+	} else {
+		location.hash = '#welcome';
+	}
+
+	$('#welcome a').on('click', function (e) {
+		localStorage.clear();
+		localStorage.setItem('welcomeClosed', 1);
+
+		if (localStorage.getItem('sampleLoaded') != 1 && $(e.currentTarget).hasClass('sample')) {
+			app.loadSampleData();
+		}
+	});
 
 	// Open navigation
 	menuBtn.click(function (e) {
@@ -52,21 +68,6 @@ $(document).ready(function () {
 	_appSvg2["default"]();
 	_appForm2["default"]();
 	_appTime2["default"]();
-
-	// set visible
-	if (localStorage.getItem('welcomeClosed') == 1) {
-		location.hash = location.hash == '' ? '#dashboard' : location.hash;
-	} else {
-		location.hash = '#welcome';
-	}
-
-	$('#welcome a').on('click', function (e) {
-		localStorage.setItem('welcomeClosed', 1);
-
-		if ($(e.currentTarget).hasClass('sample')) {
-			app.loadSampleData();
-		}
-	});
 });
 
 },{"./app/App":2,"./app/Form":3,"./app/Svg":4,"./app/time":5}],2:[function(require,module,exports){
@@ -303,7 +304,7 @@ var App = (function () {
 	};
 
 	App.prototype.loadSampleData = function loadSampleData() {
-		localStorage.clear();
+
 		this.addNote({ "uid": this.generateId(), "text": "Tact is the art of making a point without making an enemy." });
 		this.addNote({ "uid": this.generateId(), "text": "What animal represents Scotland?<br>The unicorn is the national animal of Scotland. The Royal Coat of Arms of Scotland, used prior to 1603 by the Kings of Scotland was supported by two unicorns and the current royal coat of arms of the United Kingdom is supported by a unicorn for Scotland along with a lion for England." });
 
@@ -315,6 +316,8 @@ var App = (function () {
 		this.addTodo({ "uid": 6686, "title": "Summer plans", "items": [{ "text": "move to new apartment", "checked": false, "id": "6686-0" }, { "text": "go for holiday", "checked": false, "id": "6686-1" }, { "text": "be awesome!", "checked": true, "id": "6686-2" }] });
 
 		this.addTodo({ "uid": 2506, "title": "New clothes", "items": [{ "text": "shorts", "checked": false, "id": "2506-0" }, { "text": "skirts", "checked": false, "id": "2506-1" }, { "text": "shoes", "checked": false, "id": "2506-2" }] });
+
+		localStorage.setItem('sampleLoaded', 1);
 	};
 
 	return App;
@@ -682,8 +685,7 @@ var Todo = (function () {
 		this.items.forEach(function (i) {
 			// handle checking items
 			$("#item" + i.id).on('click', function (e) {
-				i.checked = !i.checked;
-				app.setObject('todos', _this3); // update globally
+				_this3.updateCheckedState(i, app);
 			});
 
 			// handle removing items
@@ -702,7 +704,15 @@ var Todo = (function () {
 		});
 	};
 
+	Todo.prototype.updateCheckedState = function updateCheckedState(i, app) {
+		i.checked = !i.checked;
+		console.log(this.items);
+		app.setObject('todos', this); // update globally
+	};
+
 	Todo.prototype.addItem = function addItem(app, text) {
+		var _this4 = this;
+
 		var item = new TodoItem(text, false, this.uid + "-" + this.items.length);
 		this.items.push(item);
 
@@ -710,6 +720,13 @@ var Todo = (function () {
 		ul.append(this.renderItem(item));
 
 		app.setObject('todos', this); // update globally
+
+		// set listener
+		$("#item" + item.id).on('click', function (e) {
+			_this4.updateCheckedState(item, app);
+		});
+
+		console.log(this.items);
 	};
 
 	Todo.prototype.renderItem = function renderItem(item) {

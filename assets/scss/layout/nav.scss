@@ -46,8 +46,9 @@ nav {
 	}
 
 	.nav-content {
-		overflow: scroll;
-		max-height: calc(100vh - 11em);
+		overflow-x: hidden;
+		overflow-y: scroll;
+		height: calc(100vh - 11em);
 
 		h2 {
 			color: $pink;
