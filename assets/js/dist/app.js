@@ -54,12 +54,10 @@ $(document).ready(function () {
 	_appTime2["default"]();
 
 	// set visible
-	if (location.hash == '') {
-		if (localStorage.getItem('welcomeClosed') == 1) {
-			location.hash = '#dashboard';
-		} else {
-			location.hash = '#welcome';
-		}
+	if (localStorage.getItem('welcomeClosed') == 1) {
+		location.hash = location.hash == '' ? '#dashboard' : location.hash;
+	} else {
+		location.hash = '#welcome';
 	}
 
 	$('#welcome a').on('click', function (e) {
