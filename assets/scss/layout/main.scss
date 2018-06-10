@@ -4,7 +4,7 @@ main {
 	background: url('../images/bg.png') 50%;
 
 	padding-top: $header-height;
-	height: 100vh;
+	min-height: 100vh;
 
 	overflow-x: scroll;
 	overflow-y: hidden;
