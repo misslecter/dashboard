@@ -1,5 +1,7 @@
 # Dashboard
 Semestrální práce z předmětu **Vývoj klientských aplikací v Javascriptu**
+![alt text](./images "Logo Title Text 1")
+
 
 ## Cíl
 Cílem aplikace bylo vytvořit Dashboard, který by obsahoval:
@@ -8,7 +10,12 @@ Cílem aplikace bylo vytvořit Dashboard, který by obsahoval:
 * Odpočítávač dnů
 * ~~Fotografie~~
 * ~~Propojení se sociálními sítěmi~~
-Jednotlivé moduly se můžou přidávat, odebírat a upravovat
+
+Funkcionalita jednotlivých modulů:
+* přidání
+* odebrání
+* úpravy
+* ~~dragable~~
 
 ## Stránky
 Aplikace má k dispozici 3 stránky:
@@ -25,4 +32,4 @@ Aplikace má k dispozici 3 stránky:
 - [Contact](http://anastasiasurikova.com/dashboard/#contact)
   - kontaktní formulář na webdevelopera
   
-##
+## Dashboard - hlavní pracovní plocha
