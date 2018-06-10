@@ -69,17 +69,6 @@ $(document).ready(function () {
 			app.loadSampleData();
 		}
 	});
-
-	// link.on('click', (e) => {
-	// 	$('.link-to-dashboard').toggle();
-	// 	$('.link-to-contact').toggle();
-	//
-	// 	// $('#dashboard').animate({
-	// 	// 	width: "toggle"
-	// 	// });
-	// 	//
-	// 	$('#contact').toggleClass('closed');
-	// });
 });
 
 },{"./app/App":2,"./app/Form":3,"./app/Svg":4,"./app/time":5}],2:[function(require,module,exports){

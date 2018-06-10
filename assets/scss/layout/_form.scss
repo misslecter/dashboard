@@ -4,34 +4,41 @@
 	flex-direction: column;
 	width: 60%;
 
-	input {
-		background: transparent;
-		border-bottom: 3px solid $nav-bg;
-		border-top: none;
-		border-left: none;
-		border-right: none;
+	input, textarea {
+		background: rgba($pink, .2);
+		border: none;
 
 		padding: 1em;
 		font-size: 1em;
 
 		width: 100%;
 
+		margin: 1em 0;
+
 		&::-webkit-input-placeholder, &::-moz-placeholder, &:-ms-input-placeholder {
 			line-height: 3;
 		}
 
 		& + label {
-			visibility: hidden;
-			transform: none;
-			transition: $transition;
-			padding-left: 2em;
+			display: none;
 		}
+	}
 
-		&:focus {
-			& + label {
-				visibility: visible;
-				transform: translate(0, (calc(-100% - 30px)));
-			}
+	button {
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		line-height: 3em;
+
+		color: #fff;
+
+		transition: $transition;
+
+		background: lighten($nav-bg, 10%);
+		font-size: 1em;
+		margin-top: 1em;
+
+		&:hover {
+			background: darken($nav-bg, 10%);
 		}
 	}
 

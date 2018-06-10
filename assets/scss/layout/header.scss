@@ -45,15 +45,15 @@ header {
 
 	a {
 		text-decoration: none;
-		color: $text-color;
+		color: #fff;
 		font-weight: 700;
-		border-bottom: 1px solid;
 		transition: $transition;
+		background: $text-color;
+		padding: .5em 1em;
 
 		&:hover {
 			color: $accent-color;
 			text-decoration: none;
-			border-bottom: none;
 		}
 	}
 }

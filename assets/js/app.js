@@ -48,17 +48,4 @@ $(document).ready(() => {
 			app.loadSampleData();
 		}
 	});
-
-	// link.on('click', (e) => {
-	// 	$('.link-to-dashboard').toggle();
-	// 	$('.link-to-contact').toggle();
-	//
-	// 	// $('#dashboard').animate({
-	// 	// 	width: "toggle"
-	// 	// });
-	// 	//
-	// 	$('#contact').toggleClass('closed');
-	// });
-
-
 });

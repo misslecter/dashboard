@@ -20,8 +20,7 @@
     <div class="clock"></div>
 
     <div class="link">
-        <a href="#" class="link-to-contact">Contact</a>
-        <a href="#" class="link-to-dashboard" style="display: none;">Go back</a>
+        <a href="#contact" class="link-contact">Contact us</a>
     </div>
 </header>
 
@@ -73,31 +72,23 @@
 
 <section class="contact" id="contact">
 
-    <form id="ajax-contact" method="post" action="send-mail.php">
-        <!--        <div class="field">-->
-        <input type="text" id="name" name="name" required placeholder="Name">
-        <label for="name">Name:</label>
-        <!--        </div>-->
+    <a href="#dashboard" class="link-close fa fa-times fa-lg"></a>
 
-        <!--        <div class="field">-->
-        <input type="email" id="email" name="email" required placeholder="Email">
-        <label for="email">Email:</label>
-        <!--        </div>-->
+    <div class="paper">
+        <div class="logo"><h1>Tell us what you think about </h1><?php include 'assets/images/logo.svg'; ?></div>
 
-        <!--        <div class="field">-->
-        <textarea id="message" name="message" required placeholder="Message"></textarea>
-        <label for="message">Message:</label>
-        <!--        </div>-->
+        <form id="ajax-contact" method="post" action="send-mail.php">
+            <input type="text" id="name" name="name" required placeholder="Name">
+            <label for="name">Name:</label>
+            <input type="email" id="email" name="email" required placeholder="Email">
+            <label for="email">Email:</label>
+            <textarea id="message" name="message" required placeholder="Message"></textarea>
+            <label for="message">Message:</label>
+            <button type="submit">Send</button>
+        </form>
 
-        <!--        <div class="field">-->
-        <button type="submit">Send</button>
-        <!--        </div>-->
-    </form>
-
-    <div id="form-messages"></div>
-
-    <div class="paper"></div>
-    <!--    <div class="pen"></div>-->
+        <div id="form-messages"></div>
+    </div>
 
 </section>
 

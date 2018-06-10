@@ -50,6 +50,8 @@ ul {
 	overflow-wrap: break-word;
 	white-space: normal;
 
+	background: rgba(0, 0, 0, .03);
+
 	&:hover, &:focus {
 		background: rgba($pink, .2);
 		cursor: text;
@@ -74,4 +76,17 @@ svg {
 
 *:focus {
 	outline-color: $pink;
+}
+
+.link-close {
+	text-decoration: none;
+	color: #fff;
+	
+	position: absolute;
+	top:2em;
+	right: 2em;
+	
+	&:hover {
+		color: $pink;
+	}
 }
