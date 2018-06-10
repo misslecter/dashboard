@@ -26,6 +26,28 @@ var menuBtn = $('header button'),
 
 $(document).ready(function () {
 
+	var app = new _modulesApp2["default"]();
+
+	// Load data from LS
+	app.loadData();
+
+	// Open navigation
+	menuBtn.click(function (e) {
+		return app.handleNavBtnClick(e.currentTarget);
+	});
+
+	// Show add new menu
+	plusBtn.click(function (e) {
+		return app.handlePlusBtnClick(e.currentTarget);
+	});
+
+	// Handle adding new stuff
+	addNewBtns.map(function (index, el) {
+		return $(el).click(function (e) {
+			return app.handleAddNewBtnClick(e.currentTarget);
+		});
+	});
+
 	_modulesSvg2["default"]();
 	_modulesForm2["default"]();
 	_modulesTime2["default"]();
@@ -48,61 +70,24 @@ $(document).ready(function () {
 		//
 		$('#contact').toggleClass('closed');
 	});
-
-	//todo + aktualizace
-	var dp = $(".datepicker");
-	dp.datepicker({
-		dateFormat: 'dd. mm. yy',
-		onSelect: function onSelect() {
-			var dateObject = $(this).datepicker('getDate');
-			var d = new Date();
-
-			var millisecondsPerDay = 1000 * 60 * 60 * 24;
-
-			var millisBetween = dateObject.getTime() - d.getTime();
-			var days = millisBetween / millisecondsPerDay;
-
-			var diff = Math.floor(days);
-
-			$('.days-left').html('<span>' + diff + '</span>days left');
-		}
-	});
-
-	var app = new _modulesApp2["default"]();
-
-	// Load data from LS
-	app.loadData();
-
-	// Open navigation
-	menuBtn.click(function (e) {
-		return app.handleNavBtnClick(e.currentTarget);
-	});
-
-	// Show add new menu
-	plusBtn.click(function (e) {
-		return app.handlePlusBtnClick(e.currentTarget);
-	});
-
-	// Handle adding new stuff
-	addNewBtns.map(function (index, el) {
-		return $(el).click(function (e) {
-			return app.handleAddNewBtnClick(e.currentTarget);
-		});
-	});
 });
 
-},{"./modules/App":2,"./modules/Form":3,"./modules/Svg":5,"./modules/time":6}],2:[function(require,module,exports){
-'use strict';
+},{"./modules/App":2,"./modules/Form":4,"./modules/Svg":6,"./modules/time":7}],2:[function(require,module,exports){
+"use strict";
 
 exports.__esModule = true;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var _Note = require("./Note");
 
 var _Note2 = _interopRequireDefault(_Note);
+
+var _Counter = require("./Counter");
+
+var _Counter2 = _interopRequireDefault(_Counter);
 
 var main = $('main'),
     nav = $('nav'),
@@ -114,9 +99,8 @@ var App = (function () {
 		_classCallCheck(this, App);
 
 		this.notes = {};
-		this.todos = [];
-		this.counters = [];
-		this.photos = [];
+		this.todos = {};
+		this.counters = {};
 	}
 
 	App.prototype.handleNavBtnClick = function handleNavBtnClick(clickedElement) {
@@ -135,6 +119,11 @@ var App = (function () {
 			case 'note':
 				this.addNote();
 				break;
+			case 'counter':
+				this.addCounter();
+				break;
+			default:
+				return;
 		}
 	};
 
@@ -146,13 +135,13 @@ var App = (function () {
 		var note = undefined;
 
 		if (data != null) {
-			note = new _Note2['default'](data.uid, data.text, data.element, data.content, data.removeBtn);
+			note = new _Note2["default"](data.uid, data.text, data.element, data.editable, data.removeBtn);
 		} else {
-			note = new _Note2['default'](this.generateId());
+			note = new _Note2["default"](this.generateId());
 		}
 
 		// set to global object
-		this.setNote(note);
+		this.setObject('notes', note);
 
 		// update html
 		this.updateHtml(note);
@@ -160,44 +149,84 @@ var App = (function () {
 		note.handleUpdates(this);
 	};
 
-	App.prototype.setNote = function setNote(note) {
-
-		// let a = [];
-		// a[123] = 321;
-		// this.notes = map;
-
-		// console.log(a);
-		// console.log(instanceof map);
-
-		// map.set(1, 2);
-		// this.notes.toString();
-		// this.notes.set(1, 2);
-		// this.notes.set(note.uid, note);
-		this.notes[note.uid] = note;
-		this.updateStorage();
+	App.prototype.setObject = function setObject(what, e) {
+		switch (what) {
+			case 'notes':
+				this.notes[e.uid] = e;
+				localStorage.setItem(what, JSON.stringify(this.notes));
+				break;
+			case 'counters':
+				this.counters[e.uid] = e;
+				localStorage.setItem(what, JSON.stringify(this.counters));
+				break;
+			case 'todo':
+				this.todos[e.uid] = e;
+				localStorage.setItem(what, JSON.stringify(this.todos));
+				break;
+			default:
+				return;
+		}
 	};
 
-	App.prototype.removeNote = function removeNote(note) {
-		// this.notes.remove(note);
-		delete this.notes[note.uid];
-		this.updateStorage();
+	App.prototype.removeObject = function removeObject(what, e) {
+		switch (what) {
+			case 'notes':
+				delete this.notes[e.uid];
+				localStorage.setItem(what, JSON.stringify(this.notes));
+				break;
+			case 'counters':
+				delete this.counters[e.uid];
+				localStorage.setItem(what, JSON.stringify(this.counters));
+				break;
+			case 'todo':
+				delete this.todos[e.uid];
+				localStorage.setItem(what, JSON.stringify(this.todos));
+				break;
+			default:
+				return;
+		}
+		// this.updateStorage(what);
 	};
 
-	// pool
+	// COUNTER //
 
-	App.prototype.updateStorage = function updateStorage() {
-		localStorage.setItem('notes', JSON.stringify(this.notes));
+	App.prototype.addCounter = function addCounter() {
+		var data = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+
+		var counter = undefined;
+
+		if (data != null) {
+			counter = new _Counter2["default"](data.uid, data.title, data.element, data.editable, data.removeBtn, data.date, data.diff);
+		} else {
+			counter = new _Counter2["default"](this.generateId());
+		}
+
+		// set to global object
+		this.setObject('counters', counter);
+
+		// update html
+		this.updateHtml(counter);
+
+		counter.handleUpdates(this);
 	};
 
 	App.prototype.loadData = function loadData() {
 		var _this = this;
 
 		// localStorage.clear();
+
 		var notes = localStorage.getItem('notes');
 		if (notes) {
 			this.notes = JSON.parse(notes);
 			$.each(this.notes, function (key, value) {
 				return _this.addNote(value);
+			});
+		}
+		var counters = localStorage.getItem('counters');
+		if (counters) {
+			this.counters = JSON.parse(counters);
+			$.each(this.counters, function (key, value) {
+				return _this.addCounter(value);
 			});
 		}
 	};
@@ -213,10 +242,126 @@ var App = (function () {
 	return App;
 })();
 
-exports['default'] = App;
+exports["default"] = App;
+module.exports = exports["default"];
+
+},{"./Counter":3,"./Note":5}],3:[function(require,module,exports){
+'use strict';
+
+exports.__esModule = true;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var Counter = (function () {
+	function Counter(uid) {
+		var t = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
+		var el = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+		var c = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
+		var r = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
+		var d = arguments.length <= 5 || arguments[5] === undefined ? null : arguments[5];
+		var diff = arguments.length <= 6 || arguments[6] === undefined ? '-' : arguments[6];
+
+		_classCallCheck(this, Counter);
+
+		this.uid = uid;
+		this.title = t;
+		this.element = el;
+		this.editable = c;
+		this.removeBtn = r;
+		this.date = d;
+
+		this.diff = diff;
+	}
+
+	Counter.prototype.render = function render() {
+		var element = $('<div id="counter-' + this.uid + '" class="module counter" draggable="true"></div>');
+		var wrapper = $('<div class="wrapper"></div>');
+		var title = $('<div class="title" contenteditable="true">' + this.title + '</div>');
+		var dateInput = $('<input type="text" class="datepicker" placeholder="Select date...">');
+		var days = $('<div class="days-left"><span>' + this.diff + '</span>days left</div>');
+		var hidden = $('<div class="hidden" id="#hidden-date-' + this.uid + '">' + this.date + '</div>');
+
+		var i = $('<i class="fa fa-times-circle fa-lg"></i>');
+
+		wrapper.append(title);
+		wrapper.append(dateInput);
+		wrapper.append(days);
+		wrapper.append(hidden);
+
+		element.append(wrapper);
+		element.append(i);
+
+		return element;
+	};
+
+	Counter.prototype.handleUpdates = function handleUpdates(app) {
+		var _this = this;
+
+		// set elements
+		this.element = $('#counter-' + this.uid);
+		this.editable = this.element.find('.title');
+		this.removeBtn = this.element.find('i');
+		var dateInput = this.element.find('.datepicker');
+		var daysLeft = this.element.find('.days-left');
+		var date = document.getElementById('#hidden-date-' + this.uid);
+
+		// focus on editable editable
+		this.editable.focus();
+
+		var dateObject = undefined;
+		dateInput.datepicker({
+			dateFormat: 'dd. mm. yy',
+			onSelect: function onSelect(dateText, inst) {
+				dateObject = $(this).datepicker('getDate');
+				var d = new Date();
+
+				var millisecondsPerDay = 1000 * 60 * 60 * 24;
+
+				var millisBetween = dateObject.getTime() - d.getTime();
+				var days = millisBetween / millisecondsPerDay;
+
+				var diff = Math.floor(days);
+
+				daysLeft.html('<span>' + diff + '</span>days left');
+				date.innerHTML = dateText;
+			}
+		}).datepicker('setDate', this.date);
+
+		var observer = new MutationObserver(function (mutationList) {
+			mutationList.forEach(function (mutation) {
+				if (mutation.type == 'childList') {
+					_this.date = mutation.target.innerText;
+					_this.diff = daysLeft.find('span').html();
+					app.setObject('counters', _this); // update globally
+				}
+			});
+		});
+		observer.observe(date, { attributes: true, childList: true, subtree: true });
+
+		// handle end of input
+		this.editable.on('input', function (e) {
+			_this.title = $(e.currentTarget).text(); // set new text
+			app.setObject('counters', _this); // update globally
+		});
+
+		// handle removing
+		this.removeBtn.on('click', function (e) {
+			_this.element.remove(); // remove from HTML
+			app.removeObject('counters', _this); // remove globally
+		});
+	};
+
+	Counter.prototype.test = function test() {
+		console.log(this);
+	};
+
+	return Counter;
+})();
+
+exports['default'] = Counter;
 module.exports = exports['default'];
 
-},{"./Note":4}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -272,7 +417,7 @@ var init = function init() {
 exports['default'] = init;
 module.exports = exports['default'];
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -291,7 +436,7 @@ var Note = (function () {
 		this.uid = uid;
 		this.text = t;
 		this.element = el;
-		this.content = c;
+		this.editable = c;
 		this.removeBtn = r;
 	}
 
@@ -311,22 +456,22 @@ var Note = (function () {
 
 		// set elements
 		this.element = $('#note-' + this.uid);
-		this.content = this.element.find('.content');
+		this.editable = this.element.find('.content');
 		this.removeBtn = this.element.find('i');
 
-		// focus on editable content
-		this.content.focus();
+		// focus on editable editable
+		this.editable.focus();
 
 		// handle end of input
-		this.content.on('input', function (e) {
+		this.editable.on('input', function (e) {
 			_this.text = $(e.currentTarget).text(); // set new text
-			app.setNote(_this); // update globally
+			app.setObject('notes', _this); // update globally
 		});
 
 		// handle removing
 		this.removeBtn.on('click', function (e) {
 			_this.element.remove(); // remove from HTML
-			app.removeNote(_this); // remove globally
+			app.removeObject('notes', _this); // remove globally
 		});
 	};
 
@@ -336,7 +481,7 @@ var Note = (function () {
 exports['default'] = Note;
 module.exports = exports['default'];
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -361,7 +506,7 @@ var init = function init() {
 exports['default'] = init;
 module.exports = exports['default'];
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;

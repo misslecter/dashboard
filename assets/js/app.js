@@ -11,6 +11,20 @@ const menuBtn = $('header button'),
 
 $(document).ready(() => {
 
+	const app = new App();
+
+	// Load data from LS
+	app.loadData();
+
+	// Open navigation
+	menuBtn.click((e) => app.handleNavBtnClick(e.currentTarget));
+
+	// Show add new menu
+	plusBtn.click((e) => app.handlePlusBtnClick(e.currentTarget));
+
+	// Handle adding new stuff
+	addNewBtns.map((index, el) => $(el).click((e) => app.handleAddNewBtnClick(e.currentTarget)));
+
 	Svg();
 	Form();
 	Time();
@@ -34,39 +48,5 @@ $(document).ready(() => {
 		$('#contact').toggleClass('closed');
 	});
 
-	//todo + aktualizace
-	let dp = $(".datepicker");
-	dp.datepicker({
-		dateFormat: 'dd. mm. yy',
-		onSelect: function() {
-			let dateObject = $(this).datepicker('getDate');
-			let d = new Date();
-
-			let millisecondsPerDay = 1000 * 60 * 60 * 24;
-
-			let millisBetween = dateObject.getTime() - d.getTime();
-			let days = millisBetween / millisecondsPerDay;
-
-			let diff = Math.floor(days);
-
-			$('.days-left').html('<span>' + diff + '</span>days left');
-		}
-	});
-
-
-
-	const app = new App();
-
-	// Load data from LS
-	app.loadData();
-
-	// Open navigation
-	menuBtn.click((e) => app.handleNavBtnClick(e.currentTarget));
-
-	// Show add new menu
-	plusBtn.click((e) => app.handlePlusBtnClick(e.currentTarget));
-
-	// Handle adding new stuff
-	addNewBtns.map((index, el) => $(el).click((e) => app.handleAddNewBtnClick(e.currentTarget)));
 
 });

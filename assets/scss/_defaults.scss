@@ -46,4 +46,17 @@ ul {
 [contenteditable] {
 	-webkit-user-select: text;
 	user-select: text;
+
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	white-space: normal;
+
+	&:hover {
+		background: rgba($pink, .2);
+		cursor: text;
+	}
+}
+
+.hidden {
+	display: none;
 }

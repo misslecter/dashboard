@@ -4,8 +4,9 @@
 	text-align: center;
 	color: #fff;
 	padding: 3.5em 2em 3em;
+	width: $counter-w;
 
-	label {
+	.title {
 		font-size: 2em;
 		font-weight: 700;
 		margin-bottom: .5em;

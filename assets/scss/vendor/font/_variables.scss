@@ -9,7 +9,7 @@ $fa-border-color:             #eee !default;
 $fa-inverse:                  #fff !default;
 $fa-li-width:                 2em !default;
 
-// Convenience function used to set content property
+// Convenience function used to set editable property
 @function fa-content($fa-var) {
   @return unquote("\"#{$fa-var}\"");
 }

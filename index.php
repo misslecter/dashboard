@@ -44,45 +44,45 @@
 
 <main id="dashboard">
 
-    <div class="module todo" draggable="true">
-        <div class="wrapper">
-            <h1 class="title" contenteditable="true">Todo</h1>
-
-            <div class="items">
-                <ul>
-                    <li>
-                        <input id="item0" type="checkbox">
-                        <label for="item0">
-                            Love Vojta even more
-                        </label>
-                        <span class="fa fa-times fa-md"></span>
-                    </li>
-                    <li>
-                        <input id="item1" type="checkbox">
-                        <label for="item1">
-                            Love Vojta even more
-                        </label>
-                        <span class="fa fa-times fa-md"></span>
-                    </li>
-                </ul>
-            </div>
-
-            <form class="todo-new">
-                <input type="text" placeholder="New todo...">
-            </form>
-        </div>
-
-        <i class="fa fa-times-circle fa-lg"></i>
-    </div>
-
-    <div class="module counter" draggable="true" >
-        <div class="wrapper">
-            <label for="counter0" class="title" contenteditable="true">Aerodrome festival</label>
-            <input id="counter0" type="text" class="datepicker" placeholder="Select date..">
-            <div class="days-left"></div>
-        </div>
-        <i class="fa fa-times-circle fa-lg"></i>
-    </div>
+<!--    <div class="module todo" draggable="true">-->
+<!--        <div class="wrapper">-->
+<!--            <h1 class="title" contenteditable="true">Todo</h1>-->
+<!---->
+<!--            <div class="items">-->
+<!--                <ul>-->
+<!--                    <li>-->
+<!--                        <input id="item0" type="checkbox">-->
+<!--                        <label for="item0">-->
+<!--                            Love Vojta even more-->
+<!--                        </label>-->
+<!--                        <span class="fa fa-times fa-md"></span>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <input id="item1" type="checkbox">-->
+<!--                        <label for="item1">-->
+<!--                            Love Vojta even more-->
+<!--                        </label>-->
+<!--                        <span class="fa fa-times fa-md"></span>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!---->
+<!--            <form class="todo-new">-->
+<!--                <input type="text" placeholder="New todo...">-->
+<!--            </form>-->
+<!--        </div>-->
+<!---->
+<!--        <i class="fa fa-times-circle fa-lg"></i>-->
+<!--    </div>-->
+<!---->
+<!--    <div class="module counter" draggable="true">-->
+<!--        <div class="wrapper">-->
+<!--            <label for="counter0" class="title" contenteditable="true">Aerodrome festival</label>-->
+<!--            <input id="counter0" type="text" class="datepicker" placeholder="Select date..">-->
+<!--            <div class="days-left"></div>-->
+<!--        </div>-->
+<!--        <i class="fa fa-times-circle fa-lg"></i>-->
+<!--    </div>-->
 
     <div class="add-new">
         <div class="add-new__choice">

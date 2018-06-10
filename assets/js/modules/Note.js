@@ -4,7 +4,7 @@ export default class Note {
 		this.uid = uid;
 		this.text = t;
 		this.element = el;
-		this.content = c;
+		this.editable = c;
 		this.removeBtn = r;
 	}
 
@@ -23,22 +23,22 @@ export default class Note {
 
 		// set elements
 		this.element = $('#note-' + this.uid);
-		this.content = this.element.find('.content');
+		this.editable = this.element.find('.content');
 		this.removeBtn = this.element.find('i');
 
-		// focus on editable content
-		this.content.focus();
+		// focus on editable editable
+		this.editable.focus();
 
 		// handle end of input
-		this.content.on('input', (e) => {
+		this.editable.on('input', (e) => {
 			this.text = $(e.currentTarget).text(); // set new text
-			app.setNote(this); // update globally
+			app.setObject('notes', this); // update globally
 		});
 
 		// handle removing
 		this.removeBtn.on('click', (e) => {
 			this.element.remove(); // remove from HTML
-			app.removeNote(this); // remove globally
+			app.removeObject('notes', this); // remove globally
 		})
 	}
 }

@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Set the email subject.
     $subject = "New contact from $name";
 
-    // Build the email content.
+    // Build the email editable.
     $email_content = "Name: $name\n";
     $email_content .= "Email: $email\n\n";
     $email_content .= "Message:\n$message\n";
