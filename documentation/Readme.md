@@ -42,3 +42,17 @@ Aplikace má k dispozici 3 stránky:
    ![contact](https://github.com/misslecter/dashboard/blob/master/documentation/images/contact.png "Dashboard")
    
 ## Dashboard - hlavní pracovní plocha
+* Hlavička
+    * "Burger" tlačítko na otevření sidemenu
+        * v menu najdeme seznam všech aktivních modulů
+    * Aktuální čas
+    * Odkaz na stránku [Contact](http://anastasiasurikova.com/dashboard/#contact)
+* Hlavní plocha
+    * Místo, kam se přidávají nové moduly
+* Tlačítko na přidání nového modulu
+    * nová poznámka
+    * nový seznam úkolů
+    * nový odpočítávač dnů
+
+
+![dashboard](https://github.com/misslecter/dashboard/blob/master/documentation/images/dashboard-opened.png "Dashboard")
