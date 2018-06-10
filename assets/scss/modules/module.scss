@@ -34,10 +34,6 @@
 		}
 	}
 
-	*:focus {
-		outline-color: $pink;
-	}
-
 	input[type="text"] {
 		border-bottom: 3px solid $pink;
 		border-top: none;

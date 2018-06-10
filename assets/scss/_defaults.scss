@@ -51,12 +51,18 @@ ul {
 	overflow-wrap: break-word;
 	white-space: normal;
 
-	&:hover {
+	&:hover, &:focus {
 		background: rgba($pink, .2);
 		cursor: text;
+		outline: none;
 	}
+
 }
 
 .hidden {
 	display: none;
+}
+
+*:focus {
+	outline-color: $pink;
 }

@@ -48,8 +48,7 @@
 <!--        <div class="wrapper">-->
 <!--            <h1 class="title" contenteditable="true">Todo</h1>-->
 <!---->
-<!--            <div class="items">-->
-<!--                <ul>-->
+<!--                <ul class="items">-->
 <!--                    <li>-->
 <!--                        <input id="item0" type="checkbox">-->
 <!--                        <label for="item0">-->
@@ -65,7 +64,6 @@
 <!--                        <span class="fa fa-times fa-md"></span>-->
 <!--                    </li>-->
 <!--                </ul>-->
-<!--            </div>-->
 <!---->
 <!--            <form class="todo-new">-->
 <!--                <input type="text" placeholder="New todo...">-->

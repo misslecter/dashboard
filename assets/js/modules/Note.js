@@ -1,6 +1,6 @@
 export default class Note {
 
-	constructor(uid, t = '', el = null, c = null, r = null) {
+	constructor(uid, t = 'Your note text...', el = null, c = null, r = null) {
 		this.uid = uid;
 		this.text = t;
 		this.element = el;

@@ -1,6 +1,6 @@
 export default class Counter {
 
-	constructor(uid, t = '', el = null, c = null, r = null, d = null, diff = '-') {
+	constructor(uid, t = 'Event title...', el = null, c = null, r = null, d = null, diff = '-') {
 		this.uid = uid;
 		this.title = t;
 		this.element = el;
@@ -87,9 +87,5 @@ export default class Counter {
 			this.element.remove(); // remove from HTML
 			app.removeObject('counters', this); // remove globally
 		})
-	}
-
-	test() {
-		console.log(this);
 	}
 }

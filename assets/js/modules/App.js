@@ -1,5 +1,6 @@
 import Note from "./Note";
 import Counter from "./Counter";
+import Todo from "./Todo";
 
 const main = $('main'),
 	nav = $('nav'),
@@ -34,6 +35,9 @@ export default class App {
 				break;
 			case 'counter':
 				this.addCounter();
+				break;
+			case 'todo':
+				this.addTodo();
 				break;
 			default:
 				return;
@@ -71,7 +75,7 @@ export default class App {
 				this.counters[e.uid] = e;
 				localStorage.setItem(what, JSON.stringify(this.counters));
 				break;
-			case 'todo':
+			case 'todos':
 				this.todos[e.uid] = e;
 				localStorage.setItem(what, JSON.stringify(this.todos));
 				break;
@@ -90,7 +94,7 @@ export default class App {
 				delete this.counters[e.uid];
 				localStorage.setItem(what, JSON.stringify(this.counters));
 				break;
-			case 'todo':
+			case 'todos':
 				delete this.todos[e.uid];
 				localStorage.setItem(what, JSON.stringify(this.todos));
 				break;
@@ -121,6 +125,25 @@ export default class App {
 		counter.handleUpdates(this);
 	}
 
+	addTodo(data = null) {
+
+		let todo;
+
+		if(data != null) {
+			todo = new Todo(data.uid, data.title, data.element, data.editable, data.removeBtn, data.items);
+		} else {
+			todo = new Todo(this.generateId());
+		}
+
+		// set to global object
+		this.setObject('todos', todo);
+
+		// update html
+		this.updateHtml(todo);
+
+		todo.handleUpdates(this);
+	}
+
 	loadData() {
 		// localStorage.clear();
 
@@ -133,6 +156,11 @@ export default class App {
 		if (counters) {
 			this.counters = JSON.parse(counters);
 			$.each(this.counters, (key, value) => this.addCounter(value));
+		}
+		let todos = localStorage.getItem('todos');
+		if (todos) {
+			this.todos = JSON.parse(todos);
+			$.each(this.todos, (key, value) => this.addTodo(value));
 		}
 	}
 

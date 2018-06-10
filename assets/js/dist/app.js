@@ -72,7 +72,7 @@ $(document).ready(function () {
 	});
 });
 
-},{"./modules/App":2,"./modules/Form":4,"./modules/Svg":6,"./modules/time":7}],2:[function(require,module,exports){
+},{"./modules/App":2,"./modules/Form":4,"./modules/Svg":6,"./modules/time":8}],2:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -88,6 +88,10 @@ var _Note2 = _interopRequireDefault(_Note);
 var _Counter = require("./Counter");
 
 var _Counter2 = _interopRequireDefault(_Counter);
+
+var _Todo = require("./Todo");
+
+var _Todo2 = _interopRequireDefault(_Todo);
 
 var main = $('main'),
     nav = $('nav'),
@@ -121,6 +125,9 @@ var App = (function () {
 				break;
 			case 'counter':
 				this.addCounter();
+				break;
+			case 'todo':
+				this.addTodo();
 				break;
 			default:
 				return;
@@ -159,7 +166,7 @@ var App = (function () {
 				this.counters[e.uid] = e;
 				localStorage.setItem(what, JSON.stringify(this.counters));
 				break;
-			case 'todo':
+			case 'todos':
 				this.todos[e.uid] = e;
 				localStorage.setItem(what, JSON.stringify(this.todos));
 				break;
@@ -178,7 +185,7 @@ var App = (function () {
 				delete this.counters[e.uid];
 				localStorage.setItem(what, JSON.stringify(this.counters));
 				break;
-			case 'todo':
+			case 'todos':
 				delete this.todos[e.uid];
 				localStorage.setItem(what, JSON.stringify(this.todos));
 				break;
@@ -210,6 +217,26 @@ var App = (function () {
 		counter.handleUpdates(this);
 	};
 
+	App.prototype.addTodo = function addTodo() {
+		var data = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+
+		var todo = undefined;
+
+		if (data != null) {
+			todo = new _Todo2["default"](data.uid, data.title, data.element, data.editable, data.removeBtn, data.items);
+		} else {
+			todo = new _Todo2["default"](this.generateId());
+		}
+
+		// set to global object
+		this.setObject('todos', todo);
+
+		// update html
+		this.updateHtml(todo);
+
+		todo.handleUpdates(this);
+	};
+
 	App.prototype.loadData = function loadData() {
 		var _this = this;
 
@@ -229,6 +256,13 @@ var App = (function () {
 				return _this.addCounter(value);
 			});
 		}
+		var todos = localStorage.getItem('todos');
+		if (todos) {
+			this.todos = JSON.parse(todos);
+			$.each(this.todos, function (key, value) {
+				return _this.addTodo(value);
+			});
+		}
 	};
 
 	App.prototype.updateHtml = function updateHtml(el) {
@@ -245,7 +279,7 @@ var App = (function () {
 exports["default"] = App;
 module.exports = exports["default"];
 
-},{"./Counter":3,"./Note":5}],3:[function(require,module,exports){
+},{"./Counter":3,"./Note":5,"./Todo":7}],3:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -254,7 +288,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Counter = (function () {
 	function Counter(uid) {
-		var t = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
+		var t = arguments.length <= 1 || arguments[1] === undefined ? 'Event title...' : arguments[1];
 		var el = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
 		var c = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
 		var r = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
@@ -351,10 +385,6 @@ var Counter = (function () {
 		});
 	};
 
-	Counter.prototype.test = function test() {
-		console.log(this);
-	};
-
 	return Counter;
 })();
 
@@ -426,7 +456,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Note = (function () {
 	function Note(uid) {
-		var t = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
+		var t = arguments.length <= 1 || arguments[1] === undefined ? 'Your note text...' : arguments[1];
 		var el = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
 		var c = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
 		var r = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
@@ -507,6 +537,157 @@ exports['default'] = init;
 module.exports = exports['default'];
 
 },{}],7:[function(require,module,exports){
+'use strict';
+
+exports.__esModule = true;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var Todo = (function () {
+	function Todo(uid) {
+		var t = arguments.length <= 1 || arguments[1] === undefined ? 'Enter title...' : arguments[1];
+		var el = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+		var c = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
+		var r = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
+		var items = arguments.length <= 5 || arguments[5] === undefined ? [] : arguments[5];
+
+		_classCallCheck(this, Todo);
+
+		this.uid = uid;
+		this.title = t;
+		this.element = el;
+		this.editable = c;
+		this.removeBtn = r;
+
+		this.items = [];
+
+		this.parseItems(items);
+	}
+
+	Todo.prototype.parseItems = function parseItems(items) {
+		var _this = this;
+
+		$.each(items, function (key, value) {
+			var i = new TodoItem(value.text, value.checked, value.id);
+			_this.items.push(i);
+		});
+	};
+
+	Todo.prototype.render = function render() {
+		var _this2 = this;
+
+		var element = $('<div id="todo-' + this.uid + '" class="module todo" draggable="true"></div>');
+		var wrapper = $('<div class="wrapper"></div>');
+		var title = $('<h1 class="title" contenteditable="true">' + this.title + '</h1>');
+		var items = $('<ul class="items"></ul>');
+
+		this.items.forEach(function (i) {
+			return items.append(_this2.renderItem(i));
+		});
+
+		var form = $('<form class="todo-new"><input type="text" name="new-todo" placeholder="New todo..."></form>');
+		var i = $('<i class="fa fa-times-circle fa-lg"></i>');
+
+		wrapper.append(title);
+		wrapper.append(items);
+		wrapper.append(form);
+
+		element.append(wrapper);
+		element.append(i);
+
+		return element;
+	};
+
+	Todo.prototype.handleUpdates = function handleUpdates(app) {
+		var _this3 = this;
+
+		// set elements
+		this.element = $('#todo-' + this.uid);
+		this.editable = this.element.find('.title');
+		this.removeBtn = this.element.find('i');
+		var form = this.element.find('form');
+
+		// focus on editable editable
+		this.editable.focus();
+
+		// handle end of input
+		this.editable.on('input', function (e) {
+			_this3.title = $(e.currentTarget).text(); // set new text
+			app.setObject('todos', _this3); // update globally
+		});
+
+		// handle removing
+		this.removeBtn.on('click', function (e) {
+			_this3.element.remove(); // remove from HTML
+			app.removeObject('todos', _this3); // remove globally
+		});
+
+		// handle adding new todoItem
+		form.on('submit', function (e) {
+			e.preventDefault();
+			var todoText = form.find("input").val();
+			_this3.addItem(app, todoText);
+			app.setObject('todos', _this3); // update globally
+		});
+
+		this.items.forEach(function (i) {
+			// handle checking items
+			$("#item" + i.id).on('click', function (e) {
+				i.checked = !i.checked;
+				app.setObject('todos', _this3); // update globally
+			});
+
+			// handle removing items
+			$("#item" + i.id + " ~ span").on('click', function (e) {
+
+				// remove from list
+				_this3.items = $.grep(_this3.items, function (e) {
+					return e.id != i.id;
+				});
+
+				app.setObject('todos', _this3); // update globally
+
+				// remove from HTML
+				$(e.target.parentElement).remove();
+			});
+		});
+	};
+
+	Todo.prototype.addItem = function addItem(app, text) {
+		var item = new TodoItem(text, false, this.items.length);
+		this.items.push(item);
+
+		var ul = this.element.find('ul.items');
+		ul.append(this.renderItem(item));
+
+		app.setObject('todos', this); // update globally
+	};
+
+	Todo.prototype.renderItem = function renderItem(item) {
+		var checked = item.checked ? "checked" : "";
+		return $('<li><input id="item' + item.id + '" type="checkbox"' + checked + '>\n                        <label for="item' + item.id + '">' + item.text + '</label>\n                        <span class="fa fa-times fa-md"></span></li>');
+	};
+
+	return Todo;
+})();
+
+exports['default'] = Todo;
+
+var TodoItem = function TodoItem() {
+	var text = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+	var checked = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+	var id = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+
+	_classCallCheck(this, TodoItem);
+
+	this.text = text;
+	this.checked = checked;
+	this.id = id;
+};
+
+module.exports = exports['default'];
+
+},{}],8:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
