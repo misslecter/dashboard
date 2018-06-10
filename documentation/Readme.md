@@ -5,7 +5,7 @@ Semestrální práce z předmětu **Vývoj klientských aplikací v Javascriptu*
 
 
 ## Cíl
-Cílem aplikace bylo vytvořit Dashboard, který by obsahoval:
+Cílem aplikace bylo vytvořit Dashboard, který obsahuje:
 * Poznámky
 * Seznam úkolů
 * Odpočítávač dnů
@@ -80,7 +80,7 @@ Veškeré úpravy obsahu jsou realizovány pomocí tagu `contenteditable='true'`
 #### Odpočitávač dnů
 * Upravovatelný název události
 * Pole na výběr data
-    * Po kliknutí se otevře kalendář
+    * Po kliknutí se otevře kalendář (Datepicker plugin od jQuery)
 * Počet dnů do události
 * Křížek na odebrání modulu
 
