@@ -1,6 +1,6 @@
 export default class Todo {
 
-	constructor(uid, t = 'Enter title...', el = null, c = null, r = null, items = []) {
+	constructor(uid, t = '', el = null, c = null, r = null, items = []) {
 		this.uid = uid;
 		this.title = t;
 		this.element = el;
@@ -66,7 +66,9 @@ export default class Todo {
 		// handle adding new todoItem
 		form.on('submit', (e) => {
 			e.preventDefault();
-			let todoText = form.find("input").val();
+			let input = form.find("input");
+			let todoText = input.val();
+			input.val('');
 			this.addItem(app, todoText);
 			app.setObject('todos', this); // update globally
 		});
@@ -96,7 +98,7 @@ export default class Todo {
 	}
 
 	addItem(app, text) {
-		let item = new TodoItem(text, false, this.items.length);
+		let item = new TodoItem(text, false, this.uid + "-" + this.items.length);
 		this.items.push(item);
 
 		let ul = this.element.find('ul.items');

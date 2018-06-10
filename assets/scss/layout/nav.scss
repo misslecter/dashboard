@@ -43,16 +43,31 @@ nav {
 		}
 	}
 
-	a {
-		color: #fff;
-		text-transform: uppercase;
-		font-weight: 700;
-		text-decoration: none;
-		padding: 1em 2em;
-		display: block;
+	.nav-content {
+		overflow: scroll;
+		max-height: calc(100vh - 11em);
 
-		&:hover {
-			background: darken($nav-bg, 10%);
+		h2 {
+			color: $pink;
+			padding: 0 1em;
+		}
+
+		span {
+			color: rgba(255, 255, 255, 0.3);
+			padding: 0 3em;
+		}
+
+		a {
+			color: #fff;
+			text-transform: uppercase;
+			font-weight: 700;
+			text-decoration: none;
+			padding: 1em 2em 1em 3em;
+			display: block;
+
+			&:hover {
+				background: darken($nav-bg, 10%);
+			}
 		}
 	}
 }

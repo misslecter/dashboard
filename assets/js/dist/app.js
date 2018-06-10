@@ -111,6 +111,37 @@ var App = (function () {
 		$(clickedElement).toggleClass('nav-opened');
 		header.toggleClass('nav-opened');
 		nav.toggleClass('opened');
+
+		var notesHolder = $('#nav-notes'),
+		    todosHolder = $('#nav-todos'),
+		    countersHolder = $('#nav-counters');
+
+		if (Object.keys(this.notes).length > 0) {
+			notesHolder.html('');
+			$.each(this.notes, function (key, note) {
+				notesHolder.append('<li><a href="#note-' + note.uid + '">' + note.text.substr(0, 20) + '</a></li>');
+			});
+		}
+
+		if (Object.keys(this.todos).length > 0) {
+			todosHolder.html('');
+			$.each(this.todos, function (key, todo) {
+				todosHolder.append('<li><a href="#todo-' + todo.uid + '">' + todo.title.substr(0, 20) + '</a></li>');
+			});
+		}
+
+		if (Object.keys(this.counters).length > 0) {
+			countersHolder.html('');
+			$.each(this.counters, function (key, counter) {
+				countersHolder.append('<li><a href="#counter-' + counter.uid + '">' + counter.title.substr(0, 20) + '</a></li>');
+			});
+		}
+
+		nav.find('a').on('click', function () {
+			$(clickedElement).toggleClass('nav-opened');
+			header.toggleClass('nav-opened');
+			nav.toggleClass('opened');
+		});
 	};
 
 	App.prototype.handlePlusBtnClick = function handlePlusBtnClick(clickedElement) {
@@ -288,7 +319,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Counter = (function () {
 	function Counter(uid) {
-		var t = arguments.length <= 1 || arguments[1] === undefined ? 'Event title...' : arguments[1];
+		var t = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
 		var el = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
 		var c = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
 		var r = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
@@ -456,7 +487,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Note = (function () {
 	function Note(uid) {
-		var t = arguments.length <= 1 || arguments[1] === undefined ? 'Your note text...' : arguments[1];
+		var t = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
 		var el = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
 		var c = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
 		var r = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
@@ -545,7 +576,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Todo = (function () {
 	function Todo(uid) {
-		var t = arguments.length <= 1 || arguments[1] === undefined ? 'Enter title...' : arguments[1];
+		var t = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
 		var el = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
 		var c = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
 		var r = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
@@ -625,7 +656,9 @@ var Todo = (function () {
 		// handle adding new todoItem
 		form.on('submit', function (e) {
 			e.preventDefault();
-			var todoText = form.find("input").val();
+			var input = form.find("input");
+			var todoText = input.val();
+			input.val('');
 			_this3.addItem(app, todoText);
 			app.setObject('todos', _this3); // update globally
 		});
@@ -654,7 +687,7 @@ var Todo = (function () {
 	};
 
 	Todo.prototype.addItem = function addItem(app, text) {
-		var item = new TodoItem(text, false, this.items.length);
+		var item = new TodoItem(text, false, this.uid + "-" + this.items.length);
 		this.items.push(item);
 
 		var ul = this.element.find('ul.items');

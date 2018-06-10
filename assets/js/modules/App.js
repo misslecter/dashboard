@@ -16,11 +16,41 @@ export default class App {
 		this.counters = {};
 	}
 
-
 	handleNavBtnClick(clickedElement) {
 		$(clickedElement).toggleClass('nav-opened');
 		header.toggleClass('nav-opened');
 		nav.toggleClass('opened');
+
+		let notesHolder = $('#nav-notes'),
+			todosHolder = $('#nav-todos'),
+			countersHolder = $('#nav-counters');
+
+		if (Object.keys(this.notes).length > 0) {
+			notesHolder.html('');
+			$.each(this.notes, (key, note) => {
+				notesHolder.append('<li><a href="#note-' + note.uid + '">' + note.text.substr(0, 20) + '</a></li>');
+			})
+		}
+
+		if (Object.keys(this.todos).length > 0) {
+			todosHolder.html('');
+			$.each(this.todos, (key, todo) => {
+				todosHolder.append('<li><a href="#todo-' + todo.uid + '">' + todo.title.substr(0, 20) + '</a></li>');
+			})
+		}
+
+		if (Object.keys(this.counters).length > 0) {
+			countersHolder.html('');
+			$.each(this.counters, (key, counter) => {
+				countersHolder.append('<li><a href="#counter-' + counter.uid + '">' + counter.title.substr(0, 20) + '</a></li>');
+			})
+		}
+
+		nav.find('a').on('click', () => {
+			$(clickedElement).toggleClass('nav-opened');
+			header.toggleClass('nav-opened');
+			nav.toggleClass('opened');
+		})
 	}
 	
 	handlePlusBtnClick(clickedElement) {

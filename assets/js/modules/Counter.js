@@ -1,6 +1,6 @@
 export default class Counter {
 
-	constructor(uid, t = 'Event title...', el = null, c = null, r = null, d = null, diff = '-') {
+	constructor(uid, t = '', el = null, c = null, r = null, d = null, diff = '-') {
 		this.uid = uid;
 		this.title = t;
 		this.element = el;
