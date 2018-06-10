@@ -34,17 +34,17 @@
     <div class="nav-content">
         <h2>Notes</h2>
         <ul id="nav-notes">
-            <span>There are no notes to navigate</span>
+            <li class="nothing">There are no notes to navigate</li>
         </ul>
 
         <h2>Todos</h2>
         <ul id="nav-todos">
-            <span>There are no todos to navigate</span>
+            <li class="nothing">There are no todos to navigate</li>
         </ul>
 
         <h2>Counters</h2>
         <ul id="nav-counters">
-            <span>There are no counters to navigate</span>
+            <li class="nothing">There are no counters to navigate</li>
         </ul>
     </div>
 
