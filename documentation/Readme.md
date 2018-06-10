@@ -56,3 +56,32 @@ Aplikace má k dispozici 3 stránky:
 
 
 ![dashboard](https://github.com/misslecter/dashboard/blob/master/documentation/images/dashboard-opened.png "Dashboard")
+
+### Moduly
+Veškeré úpravy obsahu jsou realizovány pomocí tagu `contenteditable='true'` na html-prvku, který chceme upravovat.
+
+#### Poznámka
+* Upravovatelný text poznámky
+* Křížek na odebrání poznámky
+
+![dashboard](https://github.com/misslecter/dashboard/blob/master/documentation/images/note.png "Dashboard")
+
+#### Seznam úkolů
+* Upravovatelný název seznamu
+* Seznam úkolů
+    * `<input type="checkbox">` -> možnost označit úkol jako dokončený
+    * možnost odebrát úkol
+* Pole na vložení nového úkolu
+    * voložení se provede zmačknutím klávesy `Enter`
+* Křížek na odebrání seznamu
+
+![dashboard](https://github.com/misslecter/dashboard/blob/master/documentation/images/todo.png "Dashboard")
+
+#### Odpočitávač dnů
+* Upravovatelný název události
+* Pole na výběr data
+    * Po kliknutí se otevře kalendář
+* Počet dnů do události
+* Křížek na odebrání modulu
+
+![dashboard](https://github.com/misslecter/dashboard/blob/master/documentation/images/counter.png "Dashboard")
