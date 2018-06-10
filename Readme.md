@@ -30,7 +30,7 @@ Semantické značky | :white_check_mark: | `header`, `nav`, `main`, `section`
 Grafika - SVG / Canvas | :white_check_mark: | [logo](https://github.com/misslecter/dashboard/blob/master/assets/images/logo.svg)
 Média - Audio/Video | :cry: | 
 Formulářové prvky | :white_check_mark: | například [kontaktní stránka](https://github.com/misslecter/dashboard/blob/ca1009468aa346791d425044cf8bd38362c93505/index.php#L80)
-Offline aplikace | :no_mouth: | LocalStorage funguje offline, ale není tam žádný manifest
+Offline aplikace | :eight_spoked_asterisk: | LocalStorage funguje offline, ale není tam žádný manifest
 Pokročilé selektory | :white_check_mark: | je jich hodně [tu](https://github.com/misslecter/dashboard/tree/master/assets/scss)
 Vendor prefixy | :white_check_mark: | například pro [placeholder](https://github.com/misslecter/dashboard/blob/ca1009468aa346791d425044cf8bd38362c93505/assets/scss/layout/_form.scss#L22)
 CSS3 transformace 2D/3D | :white_check_mark: | [skrytí sidemenu](https://github.com/misslecter/dashboard/blob/ca1009468aa346791d425044cf8bd38362c93505/assets/scss/layout/nav.scss#L9)
@@ -41,7 +41,7 @@ Použití JS frameworku či knihovny | :white_check_mark: | jQuery
 Použití pokročilých JS API | :white_check_mark: | Grunt, Babelify, Browserify
 Funkční historie | :white_check_mark: | hashtagová navidace mezi stránkami. Aktivní stránka se zobrazí [pomocí CSS](https://github.com/misslecter/dashboard/blob/ca1009468aa346791d425044cf8bd38362c93505/assets/scss/_defaults.scss#L33)
 Ovládání medií | :cry: | 
-Offline aplikace | :no_mouth: | LocalStorage funguje offline, ale není tam žádný manifest
+Offline aplikace | :eight_spoked_asterisk: | LocalStorage funguje offline, ale není tam žádný manifest
 JS práce se SVG | :white_check_mark: | [změna barvy loga](https://github.com/misslecter/dashboard/blob/master/assets/js/app/Svg.js)
 
 
