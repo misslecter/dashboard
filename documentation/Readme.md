@@ -85,5 +85,5 @@ Veškeré úpravy obsahu jsou realizovány pomocí tagu `contenteditable='true'`
 * Počet dnů do události
 * Křížek na odebrání modulu
 
-![dashboard](https://github.com/misslecter/dashboard/blob/master/documentation/images/counter.png "Dashboard" =320x180)
-![dashboard](https://github.com/misslecter/dashboard/blob/master/documentation/images/counter-filled.png "Dashboard" =320x180)
+![dashboard](https://github.com/misslecter/dashboard/blob/master/documentation/images/counter.png "Dashboard")
+![dashboard](https://github.com/misslecter/dashboard/blob/master/documentation/images/counter-filled.png "Dashboard")
