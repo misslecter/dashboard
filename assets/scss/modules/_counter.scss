@@ -1,0 +1,35 @@
+.counter {
+
+	background: $counter-bg;
+	text-align: center;
+	color: #fff;
+	padding: 3.5em 2em 3em;
+
+	label {
+		font-size: 2em;
+		font-weight: 700;
+		margin-bottom: .5em;
+
+		@media (max-width: $screen-sm-max) {
+			font-size: 1.2em;
+		}
+	}
+
+	input {
+		color: #fff;
+		margin-bottom: 1em;
+
+		&::-webkit-input-placeholder {
+			color: rgba(#fff, .7);
+		}
+	}
+
+	.days-left {
+		span {
+			font-weight: 700;
+			font-size: 5em;
+			display: block;
+			line-height: 1;
+		}
+	}
+}

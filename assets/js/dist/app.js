@@ -49,6 +49,25 @@ $(document).ready(function () {
 		$('#contact').toggleClass('closed');
 	});
 
+	//todo + aktualizace
+	var dp = $(".datepicker");
+	dp.datepicker({
+		dateFormat: 'dd. mm. yy',
+		onSelect: function onSelect() {
+			var dateObject = $(this).datepicker('getDate');
+			var d = new Date();
+
+			var millisecondsPerDay = 1000 * 60 * 60 * 24;
+
+			var millisBetween = dateObject.getTime() - d.getTime();
+			var days = millisBetween / millisecondsPerDay;
+
+			var diff = Math.floor(days);
+
+			$('.days-left').html('<span>' + diff + '</span>days left');
+		}
+	});
+
 	var app = new _modulesApp2["default"]();
 
 	// Load data from LS

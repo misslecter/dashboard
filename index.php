@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dashboard</title>
     <link rel="stylesheet" href="./assets/css/app.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body>
 
@@ -67,7 +68,7 @@
             </div>
 
             <form class="todo-new">
-                <input placeholder="New todo...">
+                <input type="text" placeholder="New todo...">
             </form>
         </div>
 
@@ -75,7 +76,12 @@
     </div>
 
     <div class="module counter" draggable="true" >
-        Counter
+        <div class="wrapper">
+            <label for="counter0" class="title" contenteditable="true">Aerodrome festival</label>
+            <input id="counter0" type="text" class="datepicker" placeholder="Select date..">
+            <div class="days-left"></div>
+        </div>
+        <i class="fa fa-times-circle fa-lg"></i>
     </div>
 
     <div class="add-new">
@@ -126,6 +132,7 @@
     src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!--<script src="dist/jquery-3.3.1.min.js"></script>-->
 <script src="./assets/js/dist/app.js"></script>
 </body>

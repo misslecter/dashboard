@@ -2,6 +2,12 @@
 	position: absolute;
 	bottom: 3em;
 	right: 3em;
+	z-index: 1;
+
+	@media (max-width: $screen-sm-max) {
+		bottom: 1em;
+		right: 1em;
+	}
 
 	button {
 		background: $accent-color;

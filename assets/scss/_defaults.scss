@@ -7,6 +7,10 @@ body, html {
 	font-family: $font-default;
 	font-weight: 300;
 	color: $text-color;
+
+	@media (max-width: $screen-sm-max) {
+		font-size: 12px;
+	}
 }
 
 button {
@@ -37,4 +41,9 @@ ul {
 //}
 * {
 	box-sizing: border-box;
+}
+
+[contenteditable] {
+	-webkit-user-select: text;
+	user-select: text;
 }

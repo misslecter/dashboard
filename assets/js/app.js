@@ -34,6 +34,26 @@ $(document).ready(() => {
 		$('#contact').toggleClass('closed');
 	});
 
+	//todo + aktualizace
+	let dp = $(".datepicker");
+	dp.datepicker({
+		dateFormat: 'dd. mm. yy',
+		onSelect: function() {
+			let dateObject = $(this).datepicker('getDate');
+			let d = new Date();
+
+			let millisecondsPerDay = 1000 * 60 * 60 * 24;
+
+			let millisBetween = dateObject.getTime() - d.getTime();
+			let days = millisBetween / millisecondsPerDay;
+
+			let diff = Math.floor(days);
+
+			$('.days-left').html('<span>' + diff + '</span>days left');
+		}
+	});
+
+
 
 	const app = new App();
 

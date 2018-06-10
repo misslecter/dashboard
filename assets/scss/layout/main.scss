@@ -9,4 +9,13 @@ main {
 	overflow-x: scroll;
 	overflow-y: hidden;
 	white-space: nowrap;
+
+	padding-right: 8em;
+
+	@media (max-width: $screen-sm-max) {
+		padding: 6em 1em;
+		display: flex;
+		overflow: auto;
+		flex-direction: column;
+	}
 }

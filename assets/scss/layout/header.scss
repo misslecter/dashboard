@@ -16,6 +16,11 @@ header {
 
 	transition: $transition;
 
+	@media (max-width: $screen-sm-max) {
+		background: #eee;
+		border-bottom: 1px solid rgba(#fff, .6);
+	}
+
 	&.nav-opened {
 		padding-left: calc(#{$nav-width} + 2em);
 
