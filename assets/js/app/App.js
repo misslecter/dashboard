@@ -1,6 +1,6 @@
-import Note from "./Note";
-import Counter from "./Counter";
-import Todo from "./Todo";
+import Note from "../modules/Note";
+import Counter from "../modules/Counter";
+import Todo from "../modules/Todo";
 
 const main = $('main'),
 	nav = $('nav'),
@@ -28,28 +28,31 @@ export default class App {
 		if (Object.keys(this.notes).length > 0) {
 			notesHolder.html('');
 			$.each(this.notes, (key, note) => {
-				notesHolder.append('<li><a href="#note-' + note.uid + '">' + note.text.substr(0, 20) + '</a></li>');
+				notesHolder.append('<li><a href="">' + note.text.substr(0, 20) + '</a></li>');
 			})
 		}
 
 		if (Object.keys(this.todos).length > 0) {
 			todosHolder.html('');
 			$.each(this.todos, (key, todo) => {
-				todosHolder.append('<li><a href="#todo-' + todo.uid + '">' + todo.title.substr(0, 20) + '</a></li>');
+				todosHolder.append('<li><a href="">' + todo.title.substr(0, 20) + '</a></li>');
 			})
 		}
 
 		if (Object.keys(this.counters).length > 0) {
 			countersHolder.html('');
 			$.each(this.counters, (key, counter) => {
-				countersHolder.append('<li><a href="#counter-' + counter.uid + '">' + counter.title.substr(0, 20) + '</a></li>');
+				countersHolder.append('<li><a href="">' + counter.title.substr(0, 20) + '</a></li>');
 			})
 		}
 
-		nav.find('a').on('click', () => {
+		nav.find('a').on('click', (e) => {
+			e.preventDefault();
 			$(clickedElement).toggleClass('nav-opened');
 			header.toggleClass('nav-opened');
 			nav.toggleClass('opened');
+
+			// todo: scroll
 		})
 	}
 	
@@ -81,7 +84,7 @@ export default class App {
 		let note;
 
 		if(data != null) {
-			note = new Note(data.uid, data.text, data.element, data.editable, data.removeBtn);
+			note = new Note(data.uid, data.text);
 		} else {
 			note = new Note(this.generateId());
 		}
@@ -141,7 +144,7 @@ export default class App {
 		let counter;
 
 		if(data != null) {
-			counter = new Counter(data.uid, data.title, data.element, data.editable, data.removeBtn, data.date, data.diff);
+			counter = new Counter(data.uid, data.title, data.date, data.diff);
 		} else {
 			counter = new Counter(this.generateId());
 		}
@@ -160,7 +163,7 @@ export default class App {
 		let todo;
 
 		if(data != null) {
-			todo = new Todo(data.uid, data.title, data.element, data.editable, data.removeBtn, data.items);
+			todo = new Todo(data.uid, data.title, data.items);
 		} else {
 			todo = new Todo(this.generateId());
 		}
@@ -200,5 +203,19 @@ export default class App {
 
 	generateId() {
 		return Math.floor(1000 + Math.random() * 9000);
+	}
+
+	loadSampleData() {
+		this.addNote({"uid": this.generateId(), "text": "Tact is the art of making a point without making an enemy."});
+		this.addNote({"uid": this.generateId(), "text": "What animal represents Scotland?<br>The unicorn is the national animal of Scotland. The Royal Coat of Arms of Scotland, used prior to 1603 by the Kings of Scotland was supported by two unicorns and the current royal coat of arms of the United Kingdom is supported by a unicorn for Scotland along with a lion for England."});
+
+		let dateObject = new Date(2018, 5, 21);
+		let d = new Date();
+		let diff = Math.floor((dateObject.getTime() - d.getTime()) / (1000 * 60 * 60 * 24));
+		this.addCounter({"uid": this.generateId(), "title":"Aerodrome Festival","date":"21. 06. 2018","diff":diff})
+
+		this.addTodo({"uid":6686,"title":"Summer plans","items":[{"text":"move to new apartment","checked":false,"id":"6686-0"},{"text":"go for holiday","checked":false,"id":"6686-1"},{"text":"be awesome!","checked":true,"id":"6686-2"}]});
+
+		this.addTodo({"uid":2506,"title":"New clothes","items":[{"text":"shorts","checked":false,"id":"2506-0"},{"text":"skirts","checked":false,"id":"2506-1"},{"text":"shoes","checked":false,"id":"2506-2"}]});
 	}
 }

@@ -1,8 +1,8 @@
-import Svg from "./modules/Svg";
-import Form from "./modules/Form";
-import Time from "./modules/time";
+import Svg from "./app/Svg";
+import Form from "./app/Form";
+import Time from "./app/time";
 
-import App from "./modules/App";
+import App from "./app/App";
 
 const menuBtn = $('header button'),
 	plusBtn = $('.add-new button'),
@@ -23,7 +23,10 @@ $(document).ready(() => {
 	plusBtn.click((e) => app.handlePlusBtnClick(e.currentTarget));
 
 	// Handle adding new stuff
-	addNewBtns.map((index, el) => $(el).click((e) => app.handleAddNewBtnClick(e.currentTarget)));
+	addNewBtns.map((index, el) => $(el).click((e) => {
+		e.preventDefault();
+		app.handleAddNewBtnClick(e.currentTarget)
+	}));
 
 	Svg();
 	Form();
@@ -38,8 +41,12 @@ $(document).ready(() => {
 		}
 	}
 
-	$('#welcome a').on('click', () => {
+	$('#welcome a').on('click', (e) => {
 		localStorage.setItem('welcomeClosed', 1);
+
+		if($(e.currentTarget).hasClass('sample')) {
+			app.loadSampleData();
+		}
 	});
 
 	// link.on('click', (e) => {

@@ -54,9 +54,9 @@
     <div class="add-new">
         <div class="add-new__choice">
             <ul>
-                <li><a href="#" data-target="note">Note</a></li>
-                <li><a href="#" data-target="todo">Todo</a></li>
-                <li><a href="#" data-target="counter">Counter</a></li>
+                <li><a href="" data-target="note">Note</a></li>
+                <li><a href="" data-target="todo">Todo</a></li>
+                <li><a href="" data-target="counter">Counter</a></li>
             </ul>
         </div>
         <button><i class="fa fa-plus fa-3x"></i></button>
@@ -67,7 +67,7 @@
     <div class="logo"><h1>Welcome to</h1><?php include 'assets/images/logo.svg'; ?></div>
     <div class="btns-holder">
         <a href="#dashboard" class="btn empty">Start with empty dashboard</a>
-        <a href="" class="btn sample">Load sample data</a>
+        <a href="#dashboard" class="btn sample">Load sample data</a>
     </div>
 </section>
 

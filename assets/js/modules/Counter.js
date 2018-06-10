@@ -1,13 +1,9 @@
 export default class Counter {
 
-	constructor(uid, t = '', el = null, c = null, r = null, d = null, diff = '-') {
+	constructor(uid, t = '', date = null, diff = '-') {
 		this.uid = uid;
 		this.title = t;
-		this.element = el;
-		this.editable = c;
-		this.removeBtn = r;
-		this.date = d;
-
+		this.date = date;
 		this.diff = diff;
 	}
 
@@ -35,21 +31,20 @@ export default class Counter {
 	handleUpdates(app) {
 
 		// set elements
-		this.element = $('#counter-' + this.uid);
-		this.editable = this.element.find('.title');
-		this.removeBtn = this.element.find('i');
-		let dateInput = this.element.find('.datepicker');
-		let daysLeft = this.element.find('.days-left');
+		let element = $('#counter-' + this.uid);
+		let editable = element.find('.title');
+		let removeBtn = element.find('i');
+		let dateInput = element.find('.datepicker');
+		let daysLeft = element.find('.days-left');
 		let date = document.getElementById('#hidden-date-' + this.uid);
 
 		// focus on editable editable
-		this.editable.focus();
+		editable.focus();
 
-		let dateObject;
 		dateInput.datepicker({
 			dateFormat: 'dd. mm. yy',
-			onSelect: function(dateText,inst) {
-				dateObject = $(this).datepicker('getDate');
+			onSelect: function(dateText) {
+				let dateObject = $(this).datepicker('getDate');
 				let d = new Date();
 
 				let millisecondsPerDay = 1000 * 60 * 60 * 24;
@@ -77,14 +72,14 @@ export default class Counter {
 		observer.observe(date, { attributes: true, childList: true, subtree: true });
 
 		// handle end of input
-		this.editable.on('input', (e) => {
+		editable.on('input', (e) => {
 			this.title = $(e.currentTarget).text(); // set new text
 			app.setObject('counters', this); // update globally
 		});
 
 		// handle removing
-		this.removeBtn.on('click', (e) => {
-			this.element.remove(); // remove from HTML
+		removeBtn.on('click', (e) => {
+			element.remove(); // remove from HTML
 			app.removeObject('counters', this); // remove globally
 		})
 	}

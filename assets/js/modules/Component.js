@@ -1,9 +1,0 @@
-class Component {
-	constructor() {
-
-	}
-
-	edit () {
-
-	}
-}

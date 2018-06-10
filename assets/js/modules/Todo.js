@@ -1,12 +1,8 @@
 export default class Todo {
 
-	constructor(uid, t = '', el = null, c = null, r = null, items = []) {
+	constructor(uid, t = '', items = []) {
 		this.uid = uid;
 		this.title = t;
-		this.element = el;
-		this.editable = c;
-		this.removeBtn = r;
-
 		this.items = [];
 
 		this.parseItems(items);
@@ -43,23 +39,23 @@ export default class Todo {
 	handleUpdates(app) {
 
 		// set elements
-		this.element = $('#todo-' + this.uid);
-		this.editable = this.element.find('.title');
-		this.removeBtn = this.element.find('i');
-		let form = this.element.find('form');
+		let element = $('#todo-' + this.uid);
+		let editable = element.find('.title');
+		let removeBtn = element.find('i');
+		let form = element.find('form');
 
 		// focus on editable editable
-		this.editable.focus();
+		editable.focus();
 
 		// handle end of input
-		this.editable.on('input', (e) => {
+		editable.on('input', (e) => {
 			this.title = $(e.currentTarget).text(); // set new text
 			app.setObject('todos', this); // update globally
 		});
 
 		// handle removing
-		this.removeBtn.on('click', (e) => {
-			this.element.remove(); // remove from HTML
+		removeBtn.on('click', (e) => {
+			element.remove(); // remove from HTML
 			app.removeObject('todos', this); // remove globally
 		});
 
@@ -101,7 +97,7 @@ export default class Todo {
 		let item = new TodoItem(text, false, this.uid + "-" + this.items.length);
 		this.items.push(item);
 
-		let ul = this.element.find('ul.items');
+		let ul = $('#todo-' + this.uid).find('ul.items');
 		ul.append(this.renderItem(item));
 
 		app.setObject('todos', this); // update globally

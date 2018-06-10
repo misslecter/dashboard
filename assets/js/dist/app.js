@@ -3,21 +3,21 @@
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var _modulesSvg = require("./modules/Svg");
+var _appSvg = require("./app/Svg");
 
-var _modulesSvg2 = _interopRequireDefault(_modulesSvg);
+var _appSvg2 = _interopRequireDefault(_appSvg);
 
-var _modulesForm = require("./modules/Form");
+var _appForm = require("./app/Form");
 
-var _modulesForm2 = _interopRequireDefault(_modulesForm);
+var _appForm2 = _interopRequireDefault(_appForm);
 
-var _modulesTime = require("./modules/time");
+var _appTime = require("./app/time");
 
-var _modulesTime2 = _interopRequireDefault(_modulesTime);
+var _appTime2 = _interopRequireDefault(_appTime);
 
-var _modulesApp = require("./modules/App");
+var _appApp = require("./app/App");
 
-var _modulesApp2 = _interopRequireDefault(_modulesApp);
+var _appApp2 = _interopRequireDefault(_appApp);
 
 var menuBtn = $('header button'),
     plusBtn = $('.add-new button'),
@@ -26,7 +26,7 @@ var menuBtn = $('header button'),
 
 $(document).ready(function () {
 
-	var app = new _modulesApp2["default"]();
+	var app = new _appApp2["default"]();
 
 	// Load data from LS
 	app.loadData();
@@ -44,13 +44,14 @@ $(document).ready(function () {
 	// Handle adding new stuff
 	addNewBtns.map(function (index, el) {
 		return $(el).click(function (e) {
-			return app.handleAddNewBtnClick(e.currentTarget);
+			e.preventDefault();
+			app.handleAddNewBtnClick(e.currentTarget);
 		});
 	});
 
-	_modulesSvg2["default"]();
-	_modulesForm2["default"]();
-	_modulesTime2["default"]();
+	_appSvg2["default"]();
+	_appForm2["default"]();
+	_appTime2["default"]();
 
 	// set visible
 	if (location.hash == '') {
@@ -61,8 +62,12 @@ $(document).ready(function () {
 		}
 	}
 
-	$('#welcome a').on('click', function () {
+	$('#welcome a').on('click', function (e) {
 		localStorage.setItem('welcomeClosed', 1);
+
+		if ($(e.currentTarget).hasClass('sample')) {
+			app.loadSampleData();
+		}
 	});
 
 	// link.on('click', (e) => {
@@ -77,7 +82,7 @@ $(document).ready(function () {
 	// });
 });
 
-},{"./modules/App":2,"./modules/Form":4,"./modules/Svg":6,"./modules/time":8}],2:[function(require,module,exports){
+},{"./app/App":2,"./app/Form":3,"./app/Svg":4,"./app/time":5}],2:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -86,17 +91,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _Note = require("./Note");
+var _modulesNote = require("../modules/Note");
 
-var _Note2 = _interopRequireDefault(_Note);
+var _modulesNote2 = _interopRequireDefault(_modulesNote);
 
-var _Counter = require("./Counter");
+var _modulesCounter = require("../modules/Counter");
 
-var _Counter2 = _interopRequireDefault(_Counter);
+var _modulesCounter2 = _interopRequireDefault(_modulesCounter);
 
-var _Todo = require("./Todo");
+var _modulesTodo = require("../modules/Todo");
 
-var _Todo2 = _interopRequireDefault(_Todo);
+var _modulesTodo2 = _interopRequireDefault(_modulesTodo);
 
 var main = $('main'),
     nav = $('nav'),
@@ -124,28 +129,31 @@ var App = (function () {
 		if (Object.keys(this.notes).length > 0) {
 			notesHolder.html('');
 			$.each(this.notes, function (key, note) {
-				notesHolder.append('<li><a href="#note-' + note.uid + '">' + note.text.substr(0, 20) + '</a></li>');
+				notesHolder.append('<li><a href="">' + note.text.substr(0, 20) + '</a></li>');
 			});
 		}
 
 		if (Object.keys(this.todos).length > 0) {
 			todosHolder.html('');
 			$.each(this.todos, function (key, todo) {
-				todosHolder.append('<li><a href="#todo-' + todo.uid + '">' + todo.title.substr(0, 20) + '</a></li>');
+				todosHolder.append('<li><a href="">' + todo.title.substr(0, 20) + '</a></li>');
 			});
 		}
 
 		if (Object.keys(this.counters).length > 0) {
 			countersHolder.html('');
 			$.each(this.counters, function (key, counter) {
-				countersHolder.append('<li><a href="#counter-' + counter.uid + '">' + counter.title.substr(0, 20) + '</a></li>');
+				countersHolder.append('<li><a href="">' + counter.title.substr(0, 20) + '</a></li>');
 			});
 		}
 
-		nav.find('a').on('click', function () {
+		nav.find('a').on('click', function (e) {
+			e.preventDefault();
 			$(clickedElement).toggleClass('nav-opened');
 			header.toggleClass('nav-opened');
 			nav.toggleClass('opened');
+
+			// todo: scroll
 		});
 	};
 
@@ -178,9 +186,9 @@ var App = (function () {
 		var note = undefined;
 
 		if (data != null) {
-			note = new _Note2["default"](data.uid, data.text, data.element, data.editable, data.removeBtn);
+			note = new _modulesNote2["default"](data.uid, data.text);
 		} else {
-			note = new _Note2["default"](this.generateId());
+			note = new _modulesNote2["default"](this.generateId());
 		}
 
 		// set to global object
@@ -239,9 +247,9 @@ var App = (function () {
 		var counter = undefined;
 
 		if (data != null) {
-			counter = new _Counter2["default"](data.uid, data.title, data.element, data.editable, data.removeBtn, data.date, data.diff);
+			counter = new _modulesCounter2["default"](data.uid, data.title, data.date, data.diff);
 		} else {
-			counter = new _Counter2["default"](this.generateId());
+			counter = new _modulesCounter2["default"](this.generateId());
 		}
 
 		// set to global object
@@ -259,9 +267,9 @@ var App = (function () {
 		var todo = undefined;
 
 		if (data != null) {
-			todo = new _Todo2["default"](data.uid, data.title, data.element, data.editable, data.removeBtn, data.items);
+			todo = new _modulesTodo2["default"](data.uid, data.title, data.items);
 		} else {
-			todo = new _Todo2["default"](this.generateId());
+			todo = new _modulesTodo2["default"](this.generateId());
 		}
 
 		// set to global object
@@ -309,125 +317,27 @@ var App = (function () {
 		return Math.floor(1000 + Math.random() * 9000);
 	};
 
+	App.prototype.loadSampleData = function loadSampleData() {
+		this.addNote({ "uid": this.generateId(), "text": "Tact is the art of making a point without making an enemy." });
+		this.addNote({ "uid": this.generateId(), "text": "What animal represents Scotland?<br>The unicorn is the national animal of Scotland. The Royal Coat of Arms of Scotland, used prior to 1603 by the Kings of Scotland was supported by two unicorns and the current royal coat of arms of the United Kingdom is supported by a unicorn for Scotland along with a lion for England." });
+
+		var dateObject = new Date(2018, 5, 21);
+		var d = new Date();
+		var diff = Math.floor((dateObject.getTime() - d.getTime()) / (1000 * 60 * 60 * 24));
+		this.addCounter({ "uid": this.generateId(), "title": "Aerodrome Festival", "date": "21. 06. 2018", "diff": diff });
+
+		this.addTodo({ "uid": 6686, "title": "Summer plans", "items": [{ "text": "move to new apartment", "checked": false, "id": "6686-0" }, { "text": "go for holiday", "checked": false, "id": "6686-1" }, { "text": "be awesome!", "checked": true, "id": "6686-2" }] });
+
+		this.addTodo({ "uid": 2506, "title": "New clothes", "items": [{ "text": "shorts", "checked": false, "id": "2506-0" }, { "text": "skirts", "checked": false, "id": "2506-1" }, { "text": "shoes", "checked": false, "id": "2506-2" }] });
+	};
+
 	return App;
 })();
 
 exports["default"] = App;
 module.exports = exports["default"];
 
-},{"./Counter":3,"./Note":5,"./Todo":7}],3:[function(require,module,exports){
-'use strict';
-
-exports.__esModule = true;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-var Counter = (function () {
-	function Counter(uid) {
-		var t = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
-		var el = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
-		var c = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
-		var r = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
-		var d = arguments.length <= 5 || arguments[5] === undefined ? null : arguments[5];
-		var diff = arguments.length <= 6 || arguments[6] === undefined ? '-' : arguments[6];
-
-		_classCallCheck(this, Counter);
-
-		this.uid = uid;
-		this.title = t;
-		this.element = el;
-		this.editable = c;
-		this.removeBtn = r;
-		this.date = d;
-
-		this.diff = diff;
-	}
-
-	Counter.prototype.render = function render() {
-		var element = $('<div id="counter-' + this.uid + '" class="module counter" draggable="true"></div>');
-		var wrapper = $('<div class="wrapper"></div>');
-		var title = $('<div class="title" contenteditable="true">' + this.title + '</div>');
-		var dateInput = $('<input type="text" class="datepicker" placeholder="Select date...">');
-		var days = $('<div class="days-left"><span>' + this.diff + '</span>days left</div>');
-		var hidden = $('<div class="hidden" id="#hidden-date-' + this.uid + '">' + this.date + '</div>');
-
-		var i = $('<i class="fa fa-times-circle fa-lg"></i>');
-
-		wrapper.append(title);
-		wrapper.append(dateInput);
-		wrapper.append(days);
-		wrapper.append(hidden);
-
-		element.append(wrapper);
-		element.append(i);
-
-		return element;
-	};
-
-	Counter.prototype.handleUpdates = function handleUpdates(app) {
-		var _this = this;
-
-		// set elements
-		this.element = $('#counter-' + this.uid);
-		this.editable = this.element.find('.title');
-		this.removeBtn = this.element.find('i');
-		var dateInput = this.element.find('.datepicker');
-		var daysLeft = this.element.find('.days-left');
-		var date = document.getElementById('#hidden-date-' + this.uid);
-
-		// focus on editable editable
-		this.editable.focus();
-
-		var dateObject = undefined;
-		dateInput.datepicker({
-			dateFormat: 'dd. mm. yy',
-			onSelect: function onSelect(dateText, inst) {
-				dateObject = $(this).datepicker('getDate');
-				var d = new Date();
-
-				var millisecondsPerDay = 1000 * 60 * 60 * 24;
-
-				var millisBetween = dateObject.getTime() - d.getTime();
-				var days = millisBetween / millisecondsPerDay;
-
-				var diff = Math.floor(days);
-
-				daysLeft.html('<span>' + diff + '</span>days left');
-				date.innerHTML = dateText;
-			}
-		}).datepicker('setDate', this.date);
-
-		var observer = new MutationObserver(function (mutationList) {
-			mutationList.forEach(function (mutation) {
-				if (mutation.type == 'childList') {
-					_this.date = mutation.target.innerText;
-					_this.diff = daysLeft.find('span').html();
-					app.setObject('counters', _this); // update globally
-				}
-			});
-		});
-		observer.observe(date, { attributes: true, childList: true, subtree: true });
-
-		// handle end of input
-		this.editable.on('input', function (e) {
-			_this.title = $(e.currentTarget).text(); // set new text
-			app.setObject('counters', _this); // update globally
-		});
-
-		// handle removing
-		this.removeBtn.on('click', function (e) {
-			_this.element.remove(); // remove from HTML
-			app.removeObject('counters', _this); // remove globally
-		});
-	};
-
-	return Counter;
-})();
-
-exports['default'] = Counter;
-module.exports = exports['default'];
-
-},{}],4:[function(require,module,exports){
+},{"../modules/Counter":6,"../modules/Note":7,"../modules/Todo":8}],3:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -483,71 +393,7 @@ var init = function init() {
 exports['default'] = init;
 module.exports = exports['default'];
 
-},{}],5:[function(require,module,exports){
-'use strict';
-
-exports.__esModule = true;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-var Note = (function () {
-	function Note(uid) {
-		var t = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
-		var el = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
-		var c = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
-		var r = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
-
-		_classCallCheck(this, Note);
-
-		this.uid = uid;
-		this.text = t;
-		this.element = el;
-		this.editable = c;
-		this.removeBtn = r;
-	}
-
-	Note.prototype.render = function render() {
-		var element = $('<div id="note-' + this.uid + '" class="module note" draggable="true"></div>');
-		var content = $('<div class="content" contenteditable="true">' + this.text + '</div>');
-		var i = $('<i class="fa fa-times-circle fa-lg"></i>');
-
-		element.append(content);
-		element.append(i);
-
-		return element;
-	};
-
-	Note.prototype.handleUpdates = function handleUpdates(app) {
-		var _this = this;
-
-		// set elements
-		this.element = $('#note-' + this.uid);
-		this.editable = this.element.find('.content');
-		this.removeBtn = this.element.find('i');
-
-		// focus on editable editable
-		this.editable.focus();
-
-		// handle end of input
-		this.editable.on('input', function (e) {
-			_this.text = $(e.currentTarget).text(); // set new text
-			app.setObject('notes', _this); // update globally
-		});
-
-		// handle removing
-		this.removeBtn.on('click', function (e) {
-			_this.element.remove(); // remove from HTML
-			app.removeObject('notes', _this); // remove globally
-		});
-	};
-
-	return Note;
-})();
-
-exports['default'] = Note;
-module.exports = exports['default'];
-
-},{}],6:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -572,7 +418,193 @@ var init = function init() {
 exports['default'] = init;
 module.exports = exports['default'];
 
+},{}],5:[function(require,module,exports){
+"use strict";
+
+exports.__esModule = true;
+var init = function init() {
+	showTime();
+	setInterval(showTime, 60000);
+};
+
+var showTime = function showTime() {
+	var d = new Date();
+	$('.clock').text(addZero(d.getHours()) + ":" + addZero(d.getMinutes()));
+};
+
+var addZero = function addZero(i) {
+	if (i < 10) {
+		i = "0" + i;
+	}
+	return i;
+};
+
+exports["default"] = init;
+module.exports = exports["default"];
+
+},{}],6:[function(require,module,exports){
+'use strict';
+
+exports.__esModule = true;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var Counter = (function () {
+	function Counter(uid) {
+		var t = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
+		var date = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+		var diff = arguments.length <= 3 || arguments[3] === undefined ? '-' : arguments[3];
+
+		_classCallCheck(this, Counter);
+
+		this.uid = uid;
+		this.title = t;
+		this.date = date;
+		this.diff = diff;
+	}
+
+	Counter.prototype.render = function render() {
+		var element = $('<div id="counter-' + this.uid + '" class="module counter" draggable="true"></div>');
+		var wrapper = $('<div class="wrapper"></div>');
+		var title = $('<div class="title" contenteditable="true">' + this.title + '</div>');
+		var dateInput = $('<input type="text" class="datepicker" placeholder="Select date...">');
+		var days = $('<div class="days-left"><span>' + this.diff + '</span>days left</div>');
+		var hidden = $('<div class="hidden" id="#hidden-date-' + this.uid + '">' + this.date + '</div>');
+
+		var i = $('<i class="fa fa-times-circle fa-lg"></i>');
+
+		wrapper.append(title);
+		wrapper.append(dateInput);
+		wrapper.append(days);
+		wrapper.append(hidden);
+
+		element.append(wrapper);
+		element.append(i);
+
+		return element;
+	};
+
+	Counter.prototype.handleUpdates = function handleUpdates(app) {
+		var _this = this;
+
+		// set elements
+		var element = $('#counter-' + this.uid);
+		var editable = element.find('.title');
+		var removeBtn = element.find('i');
+		var dateInput = element.find('.datepicker');
+		var daysLeft = element.find('.days-left');
+		var date = document.getElementById('#hidden-date-' + this.uid);
+
+		// focus on editable editable
+		editable.focus();
+
+		dateInput.datepicker({
+			dateFormat: 'dd. mm. yy',
+			onSelect: function onSelect(dateText) {
+				var dateObject = $(this).datepicker('getDate');
+				var d = new Date();
+
+				var millisecondsPerDay = 1000 * 60 * 60 * 24;
+
+				var millisBetween = dateObject.getTime() - d.getTime();
+				var days = millisBetween / millisecondsPerDay;
+
+				var diff = Math.floor(days);
+
+				daysLeft.html('<span>' + diff + '</span>days left');
+				date.innerHTML = dateText;
+			}
+		}).datepicker('setDate', this.date);
+
+		var observer = new MutationObserver(function (mutationList) {
+			mutationList.forEach(function (mutation) {
+				if (mutation.type == 'childList') {
+					_this.date = mutation.target.innerText;
+					_this.diff = daysLeft.find('span').html();
+					app.setObject('counters', _this); // update globally
+				}
+			});
+		});
+		observer.observe(date, { attributes: true, childList: true, subtree: true });
+
+		// handle end of input
+		editable.on('input', function (e) {
+			_this.title = $(e.currentTarget).text(); // set new text
+			app.setObject('counters', _this); // update globally
+		});
+
+		// handle removing
+		removeBtn.on('click', function (e) {
+			element.remove(); // remove from HTML
+			app.removeObject('counters', _this); // remove globally
+		});
+	};
+
+	return Counter;
+})();
+
+exports['default'] = Counter;
+module.exports = exports['default'];
+
 },{}],7:[function(require,module,exports){
+'use strict';
+
+exports.__esModule = true;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var Note = (function () {
+	function Note(uid) {
+		var t = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
+
+		_classCallCheck(this, Note);
+
+		this.uid = uid;
+		this.text = t;
+	}
+
+	Note.prototype.render = function render() {
+		var element = $('<div id="note-' + this.uid + '" class="module note" draggable="true"></div>');
+		var content = $('<div class="content" contenteditable="true">' + this.text + '</div>');
+		var i = $('<i class="fa fa-times-circle fa-lg"></i>');
+
+		element.append(content);
+		element.append(i);
+
+		return element;
+	};
+
+	Note.prototype.handleUpdates = function handleUpdates(app) {
+		var _this = this;
+
+		// set elements
+		var element = $('#note-' + this.uid);
+		var editable = element.find('.content');
+		var removeBtn = element.find('i');
+
+		// focus on editable editable
+		editable.focus();
+
+		// handle end of input
+		editable.on('input', function (e) {
+			_this.text = $(e.currentTarget).text(); // set new text
+			app.setObject('notes', _this); // update globally
+		});
+
+		// handle removing
+		removeBtn.on('click', function (e) {
+			element.remove(); // remove from HTML
+			app.removeObject('notes', _this); // remove globally
+		});
+	};
+
+	return Note;
+})();
+
+exports['default'] = Note;
+module.exports = exports['default'];
+
+},{}],8:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -582,19 +614,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Todo = (function () {
 	function Todo(uid) {
 		var t = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
-		var el = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
-		var c = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
-		var r = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
-		var items = arguments.length <= 5 || arguments[5] === undefined ? [] : arguments[5];
+		var items = arguments.length <= 2 || arguments[2] === undefined ? [] : arguments[2];
 
 		_classCallCheck(this, Todo);
 
 		this.uid = uid;
 		this.title = t;
-		this.element = el;
-		this.editable = c;
-		this.removeBtn = r;
-
 		this.items = [];
 
 		this.parseItems(items);
@@ -638,23 +663,23 @@ var Todo = (function () {
 		var _this3 = this;
 
 		// set elements
-		this.element = $('#todo-' + this.uid);
-		this.editable = this.element.find('.title');
-		this.removeBtn = this.element.find('i');
-		var form = this.element.find('form');
+		var element = $('#todo-' + this.uid);
+		var editable = element.find('.title');
+		var removeBtn = element.find('i');
+		var form = element.find('form');
 
 		// focus on editable editable
-		this.editable.focus();
+		editable.focus();
 
 		// handle end of input
-		this.editable.on('input', function (e) {
+		editable.on('input', function (e) {
 			_this3.title = $(e.currentTarget).text(); // set new text
 			app.setObject('todos', _this3); // update globally
 		});
 
 		// handle removing
-		this.removeBtn.on('click', function (e) {
-			_this3.element.remove(); // remove from HTML
+		removeBtn.on('click', function (e) {
+			element.remove(); // remove from HTML
 			app.removeObject('todos', _this3); // remove globally
 		});
 
@@ -695,7 +720,7 @@ var Todo = (function () {
 		var item = new TodoItem(text, false, this.uid + "-" + this.items.length);
 		this.items.push(item);
 
-		var ul = this.element.find('ul.items');
+		var ul = $('#todo-' + this.uid).find('ul.items');
 		ul.append(this.renderItem(item));
 
 		app.setObject('todos', this); // update globally
@@ -724,29 +749,5 @@ var TodoItem = function TodoItem() {
 };
 
 module.exports = exports['default'];
-
-},{}],8:[function(require,module,exports){
-"use strict";
-
-exports.__esModule = true;
-var init = function init() {
-	showTime();
-	setInterval(showTime, 60000);
-};
-
-var showTime = function showTime() {
-	var d = new Date();
-	$('.clock').text(addZero(d.getHours()) + ":" + addZero(d.getMinutes()));
-};
-
-var addZero = function addZero(i) {
-	if (i < 10) {
-		i = "0" + i;
-	}
-	return i;
-};
-
-exports["default"] = init;
-module.exports = exports["default"];
 
 },{}]},{},[1]);

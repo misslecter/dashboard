@@ -1,11 +1,8 @@
 export default class Note {
 
-	constructor(uid, t = '', el = null, c = null, r = null) {
+	constructor(uid, t = '') {
 		this.uid = uid;
 		this.text = t;
-		this.element = el;
-		this.editable = c;
-		this.removeBtn = r;
 	}
 
 	render() {
@@ -22,22 +19,22 @@ export default class Note {
 	handleUpdates(app) {
 
 		// set elements
-		this.element = $('#note-' + this.uid);
-		this.editable = this.element.find('.content');
-		this.removeBtn = this.element.find('i');
+		let element = $('#note-' + this.uid);
+		let editable = element.find('.content');
+		let removeBtn = element.find('i');
 
 		// focus on editable editable
-		this.editable.focus();
+		editable.focus();
 
 		// handle end of input
-		this.editable.on('input', (e) => {
+		editable.on('input', (e) => {
 			this.text = $(e.currentTarget).text(); // set new text
 			app.setObject('notes', this); // update globally
 		});
 
 		// handle removing
-		this.removeBtn.on('click', (e) => {
-			this.element.remove(); // remove from HTML
+		removeBtn.on('click', (e) => {
+			element.remove(); // remove from HTML
 			app.removeObject('notes', this); // remove globally
 		})
 	}
