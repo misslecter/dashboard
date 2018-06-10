@@ -1,5 +1,6 @@
 # Dashboard
 Semestrální práce z předmětu **Vývoj klientských aplikací v Javascriptu**
+[Live verze](http://anastasiasurikova.com/dashboard/)
 
 ![dashboard](https://github.com/misslecter/dashboard/blob/master/documentation/images/dashboard-filled.png "Dashboard")
 
@@ -72,7 +73,7 @@ Veškeré úpravy obsahu jsou realizovány pomocí tagu `contenteditable='true'`
     * `<input type="checkbox">` -> možnost označit úkol jako dokončený
     * možnost odebrát úkol
 * Pole na vložení nového úkolu
-    * voložení se provede zmačknutím klávesy `Enter`
+    * vložení se provede zmačknutím klávesy `Enter`
 * Křížek na odebrání seznamu
 
 ![dashboard](https://github.com/misslecter/dashboard/blob/master/documentation/images/todo.png "Dashboard")
