@@ -27,20 +27,6 @@ nav {
 		border-bottom: 1px solid white;
 		width: 70%;
 		margin: 0 auto 2em;
-
-		img {
-			height: 4em;
-		}
-
-		svg {
-			padding-top: 1em;
-			height: 5em;
-			cursor: pointer;
-
-			text, tspan {
-				transition: $transition;
-			}
-		}
 	}
 
 	.nav-content {

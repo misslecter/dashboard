@@ -64,7 +64,11 @@
 </main>
 
 <section class="welcome" id="welcome">
-    Welcome
+    <div class="logo"><h1>Welcome to</h1><?php include 'assets/images/logo.svg'; ?></div>
+    <div class="btns-holder">
+        <a href="#dashboard" class="btn empty">Start with empty dashboard</a>
+        <a href="" class="btn sample">Load sample data</a>
+    </div>
 </section>
 
 <section class="contact" id="contact">

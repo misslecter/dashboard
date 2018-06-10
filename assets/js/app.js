@@ -31,22 +31,27 @@ $(document).ready(() => {
 
 	// set visible
 	if (location.hash == '') {
-		location.hash = '#dashboard';
-	} else {
-		$('.link-to-dashboard').toggle();
-		$('.link-to-contact').toggle();
+		if(localStorage.getItem('welcomeClosed') == 1) {
+			location.hash = '#dashboard';
+		} else {
+			location.hash = '#welcome';
+		}
 	}
 
-	link.on('click', (e) => {
-		$('.link-to-dashboard').toggle();
-		$('.link-to-contact').toggle();
-
-		// $('#dashboard').animate({
-		// 	width: "toggle"
-		// });
-		//
-		$('#contact').toggleClass('closed');
+	$('#welcome a').on('click', () => {
+		localStorage.setItem('welcomeClosed', 1);
 	});
+
+	// link.on('click', (e) => {
+	// 	$('.link-to-dashboard').toggle();
+	// 	$('.link-to-contact').toggle();
+	//
+	// 	// $('#dashboard').animate({
+	// 	// 	width: "toggle"
+	// 	// });
+	// 	//
+	// 	$('#contact').toggleClass('closed');
+	// });
 
 
 });

@@ -30,15 +30,14 @@ ul {
 	list-style: none;
 }
 
-//#dashboard, #contact {
-//	transform:  translate(0);
-//	transition: all .5s ease;
-//
-//	&:not(:target) {
-//		transform: translate(100%);
-//		overflow: hidden;
-//	}
-//}
+#dashboard, #contact, #welcome {
+
+	&:not(:target) {
+		display: none;
+		overflow: hidden;
+	}
+}
+
 * {
 	box-sizing: border-box;
 }
@@ -57,6 +56,16 @@ ul {
 		outline: none;
 	}
 
+}
+
+svg {
+	padding-top: 1em;
+	height: 5em;
+	cursor: pointer;
+
+	text, tspan {
+		transition: $transition;
+	}
 }
 
 .hidden {
