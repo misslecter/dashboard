@@ -4,16 +4,10 @@
 	border: 1px solid lighten($note-bg, 5%);
 
 	resize: both;
-	overflow: auto;
 	width: $note-w;
 	height: $note-h;
 
 	padding: 3em 2em 2em;
 
 	box-shadow: 0 0 12px 0 rgba(0,0,0,0.35);
-
-	//input {
-	//	height: calc();
-	//}
-
 }

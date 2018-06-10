@@ -17,7 +17,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Set the recipient email address.
-    // FIXME: Update this to your desired email address.
     $recipient = "surikova.anastasia@gmail.com";
 
     // Set the email subject.
@@ -47,5 +46,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     http_response_code(403);
     echo "There was a problem with your submission, please try again.";
 }
-
-?>

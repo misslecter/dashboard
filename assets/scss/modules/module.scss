@@ -9,7 +9,7 @@
 	display: inline-block;
 
 	@media (max-width: $screen-sm-max) {
-		margin: 1em 0;
+		margin: 2em 0;
 		width: 100% !important;
 	}
 
@@ -30,6 +30,10 @@
 
 		&:hover {
 			cursor: pointer;
+			opacity: 1;
+		}
+
+		@media (max-width: $screen-sm-max) {
 			opacity: 1;
 		}
 	}

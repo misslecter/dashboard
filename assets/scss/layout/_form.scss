@@ -4,6 +4,10 @@
 	flex-direction: column;
 	width: 60%;
 
+	@media (max-width: $screen-sm-max) {
+		width: 100%;
+	}
+
 	input, textarea {
 		background: rgba($pink, .2);
 		border: none;

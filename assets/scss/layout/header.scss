@@ -17,8 +17,9 @@ header {
 	transition: $transition;
 
 	@media (max-width: $screen-sm-max) {
-		background: #eee;
-		border-bottom: 1px solid rgba(#fff, .6);
+		background: rgba(#fff, 0.8);
+		padding: 1.5em 2em;
+		height: auto;
 	}
 
 	&.nav-opened {

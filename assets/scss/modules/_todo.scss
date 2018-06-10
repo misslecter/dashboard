@@ -7,6 +7,11 @@
 	height: $todo-h;
 	padding: 3em 2em;
 
+	@media (max-width: $screen-sm-max) {
+		margin-top: 4em !important;
+		height: calc(#{$todo-h} / 1.5);
+	}
+
 	i {
 		padding: 3.8em 2em !important;
 	}
@@ -28,9 +33,12 @@
 		transform: translate(-50%, 0);
 	}
 
+	form {
+		padding-top: 1em;
+	}
+
 	.items {
 		flex-grow: 1;
-		min-height: 297px;
 		overflow: scroll;
 
 		li {

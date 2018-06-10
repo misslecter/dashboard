@@ -26,6 +26,11 @@
 		display: flex;
 		width: 60%;
 		padding: 3em 0;
+
+		@media (max-width: $screen-sm-max) {
+			flex-direction: column;
+			width: 90%;
+		}
 	}
 
 	.btn {
@@ -72,6 +77,7 @@
 			margin: 0;
 			font-size: 3em;
 			font-weight: 300;
+			width: 100%;
 		}
 
 		svg {
@@ -81,6 +87,26 @@
 
 			text {
 				fill: $pink;
+			}
+		}
+
+		img {
+			display: none;
+		}
+
+		@media (max-width: $screen-sm-max) {
+			width: 90%;
+
+			h1 {
+				text-align: center;
+			}
+			svg {
+				display: none;
+			}
+			img {
+				display: inline-block;
+				height: 5em;
+				margin: auto;
 			}
 		}
 	}

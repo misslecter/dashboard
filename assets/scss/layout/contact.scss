@@ -43,6 +43,12 @@
 		flex-direction: column;
 
 		padding: 2em;
+
+		@media (max-width: $screen-sm-max) {
+			width: 90%;
+			padding: 1em 2em;
+			height: auto;
+		}
 	}
 
 	#form-messages {
