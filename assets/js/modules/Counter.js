@@ -52,7 +52,7 @@ export default class Counter {
 				let millisBetween = dateObject.getTime() - d.getTime();
 				let days = millisBetween / millisecondsPerDay;
 
-				let diff = Math.floor(days);
+				let diff = Math.floor(days) + 1;
 
 				daysLeft.html('<span>' + diff + '</span>days left');
 				date.innerHTML = dateText;

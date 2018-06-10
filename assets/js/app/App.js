@@ -211,7 +211,7 @@ export default class App {
 
 		let dateObject = new Date(2018, 5, 21);
 		let d = new Date();
-		let diff = Math.floor((dateObject.getTime() - d.getTime()) / (1000 * 60 * 60 * 24));
+		let diff = Math.floor((dateObject.getTime() - d.getTime()) / (1000 * 60 * 60 * 24)) + 1;
 		this.addCounter({"uid": this.generateId(), "title":"Aerodrome Festival","date":"21. 06. 2018","diff":diff})
 
 		this.addTodo({"uid":6686,"title":"Summer plans","items":[{"text":"move to new apartment","checked":false,"id":"6686-0"},{"text":"go for holiday","checked":false,"id":"6686-1"},{"text":"be awesome!","checked":true,"id":"6686-2"}]});
