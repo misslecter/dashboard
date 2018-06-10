@@ -1,6 +1,6 @@
 # Dashboard
 Semestrální práce z předmětu **Vývoj klientských aplikací v Javascriptu**
-![alt text](./images "Logo Title Text 1")
+![dashboard](https://github.com/misslecter/dashboard/blob/master/documentation/images/dashboard-filled.png "Dashboard")
 
 
 ## Cíl
