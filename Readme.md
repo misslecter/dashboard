@@ -19,6 +19,8 @@ Semestrální práce z předmětu **Vývoj klientských aplikací v Javascriptu*
     * na ikony
     
 ## Tabulka hodnoceni
+Markdown | Less | Pretty
+--- | --- | ---
 Validita | :white_check_mark: | [result](https://validator.w3.org/nu/?doc=http%3A%2F%2Fanastasiasurikova.com%2Fdashboard%2F)
 Cross browser | :white_check_mark: | testováno ve Firefox, Chrome, Safari
 Semantické značky | :white_check_mark: | `header`, `nav`, `main`, `section`
