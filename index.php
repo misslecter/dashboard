@@ -28,6 +28,7 @@
 
     <div class="logo">
         <?php include 'assets/images/logo.svg'; ?>
+        <img src="./assets/images/logo.png" alt="Logo">
     </div>
 
     <div class="nav-content">
@@ -65,8 +66,10 @@
 <section class="welcome" id="welcome">
     <div class="logo">
         <h1>Welcome to</h1>
-        <?php include 'assets/images/logo.svg'; ?>
-        <img src="./assets/images/logo.png" alt="Logo">
+        <div>
+            <?php include 'assets/images/logo.svg'; ?>
+            <img src="./assets/images/logo.png" alt="Logo">
+        </div>
     </div>
     <div class="btns-holder">
         <a href="#dashboard" class="btn empty">Start with empty dashboard</a>
@@ -81,8 +84,10 @@
     <div class="paper">
         <div class="logo">
             <h1>Tell us what you think about</h1>
-            <?php include 'assets/images/logo.svg'; ?>
-            <img src="./assets/images/logo.png" alt="Logo">
+            <div>
+                <?php include 'assets/images/logo.svg'; ?>
+                <img src="./assets/images/logo.png" alt="Logo">
+            </div>
         </div>
 
         <form id="ajax-contact" method="post" action="send-mail.php">

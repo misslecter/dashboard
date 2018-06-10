@@ -46,6 +46,10 @@
 
 		transition: $transition;
 
+		@media (max-width: $screen-sm-max) {
+			line-height: 4em;
+		}
+
 		&.empty {
 			background: lighten($nav-bg, 10%);
 
@@ -71,7 +75,16 @@
 
 		display: flex;
 		align-items: baseline;
-		flex-wrap: wrap;
+
+		@media (max-width: $screen-md-max) {
+			text-align: center;
+			flex-wrap: wrap;
+			justify-content: center;
+
+			svg {
+				bottom: 0 !important;
+			}
+		}
 
 		h1 {
 			margin: 0;

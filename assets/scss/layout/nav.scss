@@ -27,6 +27,22 @@ nav {
 		border-bottom: 1px solid white;
 		width: 70%;
 		margin: 0 auto 2em;
+
+		img {
+			display: none;
+		}
+
+		@media (max-width: $screen-sm-max) {
+
+			svg {
+				display: none;
+			}
+			img {
+				display: inline-block;
+				height: 3em;
+				margin: auto;
+			}
+		}
 	}
 
 	.nav-content {
