@@ -18,6 +18,9 @@ Semestrální práce z předmětu **Vývoj klientských aplikací v Javascriptu*
 * FontAwesome
     * na ikony
     
+## Dokumentace
+... a i s obrázkami k nalezení [zde](https://github.com/misslecter/dashboard/blob/master/documentation/Readme.md)
+    
 ## Tabulka hodnoceni
 Požádavek | Splněno | Komentář
 --- | --- | ---
