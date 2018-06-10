@@ -111,7 +111,7 @@
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<!--<script src="dist/jquery-3.3.1.min.js"></script>-->
+<script src="./assets/js/vendor/masonry.pkgd.min.js"></script>
 <script src="./assets/js/dist/app.js"></script>
 </body>
 </html>

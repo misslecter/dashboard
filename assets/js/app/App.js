@@ -178,8 +178,6 @@ export default class App {
 	}
 
 	loadData() {
-		// localStorage.clear();
-
 		let notes = localStorage.getItem('notes');
 		if (notes) {
 			this.notes = JSON.parse(notes);
@@ -206,6 +204,7 @@ export default class App {
 	}
 
 	loadSampleData() {
+		localStorage.clear();
 		this.addNote({"uid": this.generateId(), "text": "Tact is the art of making a point without making an enemy."});
 		this.addNote({"uid": this.generateId(), "text": "What animal represents Scotland?<br>The unicorn is the national animal of Scotland. The Royal Coat of Arms of Scotland, used prior to 1603 by the Kings of Scotland was supported by two unicorns and the current royal coat of arms of the United Kingdom is supported by a unicorn for Scotland along with a lion for England."});
 
