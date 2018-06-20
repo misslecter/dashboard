@@ -1,6 +1,6 @@
-import Note from "../modules/Note";
-import Counter from "../modules/Counter";
-import Todo from "../modules/Todo";
+import Note from "./Note";
+import Counter from "./Counter";
+import Todo from "./Todo";
 
 const main = $('main'),
 	nav = $('nav'),
@@ -8,7 +8,7 @@ const main = $('main'),
 	addNewNav = $('.add-new__choice');
 
 
-export default class App {
+export default class Dashboard {
 
 	constructor() {
 		this.notes = {};

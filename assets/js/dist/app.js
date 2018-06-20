@@ -3,11 +3,11 @@
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var _appSvg = require("./app/Svg");
+var _appSvg = require("./app/svg");
 
 var _appSvg2 = _interopRequireDefault(_appSvg);
 
-var _appForm = require("./app/Form");
+var _appForm = require("./app/form");
 
 var _appForm2 = _interopRequireDefault(_appForm);
 
@@ -15,9 +15,13 @@ var _appTime = require("./app/time");
 
 var _appTime2 = _interopRequireDefault(_appTime);
 
-var _appApp = require("./app/App");
+var _appFlickr = require("./app/flickr");
 
-var _appApp2 = _interopRequireDefault(_appApp);
+var _appFlickr2 = _interopRequireDefault(_appFlickr);
+
+var _modulesDashboard = require("./modules/Dashboard");
+
+var _modulesDashboard2 = _interopRequireDefault(_modulesDashboard);
 
 var menuBtn = $('header button'),
     plusBtn = $('.add-new button'),
@@ -26,14 +30,16 @@ var menuBtn = $('header button'),
 
 $(document).ready(function () {
 
-	var app = new _appApp2["default"]();
+	_appFlickr2["default"]();
+
+	var dashboard = new _modulesDashboard2["default"]();
 
 	// set visible
 	if (localStorage.getItem('welcomeClosed') == 1) {
 		location.hash = location.hash == '' ? '#dashboard' : location.hash;
 
 		// Load data from LS
-		app.loadData();
+		dashboard.loadData();
 	} else {
 		location.hash = '#welcome';
 	}
@@ -43,25 +49,25 @@ $(document).ready(function () {
 		localStorage.setItem('welcomeClosed', 1);
 
 		if (localStorage.getItem('sampleLoaded') != 1 && $(e.currentTarget).hasClass('sample')) {
-			app.loadSampleData();
+			dashboard.loadSampleData();
 		}
 	});
 
 	// Open navigation
 	menuBtn.click(function (e) {
-		return app.handleNavBtnClick(e.currentTarget);
+		return dashboard.handleNavBtnClick(e.currentTarget);
 	});
 
 	// Show add new menu
 	plusBtn.click(function (e) {
-		return app.handlePlusBtnClick(e.currentTarget);
+		return dashboard.handlePlusBtnClick(e.currentTarget);
 	});
 
 	// Handle adding new stuff
 	addNewBtns.map(function (index, el) {
 		return $(el).click(function (e) {
 			e.preventDefault();
-			app.handleAddNewBtnClick(e.currentTarget);
+			dashboard.handleAddNewBtnClick(e.currentTarget);
 		});
 	});
 
@@ -70,263 +76,121 @@ $(document).ready(function () {
 	_appTime2["default"]();
 });
 
-},{"./app/App":2,"./app/Form":3,"./app/Svg":4,"./app/time":5}],2:[function(require,module,exports){
-"use strict";
+},{"./app/flickr":2,"./app/form":3,"./app/svg":4,"./app/time":5,"./modules/Dashboard":7}],2:[function(require,module,exports){
+'use strict';
 
 exports.__esModule = true;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var API_KEY = 'b8cd48c5c58d650c4f0f1e1c1ed69df1',
+    GROUP_ID = '23854677@N00';
 
-var _modulesNote = require("../modules/Note");
+var mainDashboard = $('main');
 
-var _modulesNote2 = _interopRequireDefault(_modulesNote);
+var imgSrc = undefined,
+    owner = undefined,
+    ownername = undefined;
 
-var _modulesCounter = require("../modules/Counter");
-
-var _modulesCounter2 = _interopRequireDefault(_modulesCounter);
-
-var _modulesTodo = require("../modules/Todo");
-
-var _modulesTodo2 = _interopRequireDefault(_modulesTodo);
-
-var main = $('main'),
-    nav = $('nav'),
-    header = $('header'),
-    addNewNav = $('.add-new__choice');
-
-var App = (function () {
-	function App() {
-		_classCallCheck(this, App);
-
-		this.notes = {};
-		this.todos = {};
-		this.counters = {};
+var init = function init() {
+	var savedBg = localStorage.getItem('background');
+	if (savedBg == null) {
+		getData();
+	} else {
+		var bg = JSON.parse(savedBg);
+		var fi = new FlickrImage(bg.url, bg.owner, bg.ownername);
+		fi.setBackground();
 	}
 
-	App.prototype.handleNavBtnClick = function handleNavBtnClick(clickedElement) {
-		$(clickedElement).toggleClass('nav-opened');
-		header.toggleClass('nav-opened');
-		nav.toggleClass('opened');
+	$('#refreshBg').on('click', function (e) {
+		e.preventDefault();
+		getData();
+	});
+};
 
-		var notesHolder = $('#nav-notes'),
-		    todosHolder = $('#nav-todos'),
-		    countersHolder = $('#nav-counters');
+exports['default'] = init;
 
-		if (Object.keys(this.notes).length > 0) {
-			notesHolder.html('');
-			$.each(this.notes, function (key, note) {
-				notesHolder.append('<li><a href="">' + note.text.substr(0, 20) + '</a></li>');
-			});
-		}
+var getData = function getData() {
 
-		if (Object.keys(this.todos).length > 0) {
-			todosHolder.html('');
-			$.each(this.todos, function (key, todo) {
-				todosHolder.append('<li><a href="">' + todo.title.substr(0, 20) + '</a></li>');
-			});
-		}
+	$.getJSON("http://api.flickr.com/services/rest/", {
+		method: 'flickr.groups.pools.getPhotos',
+		api_key: API_KEY,
+		group_id: GROUP_ID,
+		format: 'json',
+		nojsoncallback: 1,
+		extras: "description, license, date_upload, date_taken, owner_name, icon_server, original_format, last_update, geo, tags, machine_tags, o_dims, views, media, path_alias, url_sq, url_t, url_s, url_q, url_m, url_n, url_z, url_c, url_l, url_o",
+		per_page: 100 // you can increase this to get a bigger array
+	}, function (data) {
 
-		if (Object.keys(this.counters).length > 0) {
-			countersHolder.html('');
-			$.each(this.counters, function (key, counter) {
-				countersHolder.append('<li><a href="">' + counter.title.substr(0, 20) + '</a></li>');
-			});
-		}
+		// if everything went good
+		if (data.stat == 'ok') {
+			(function () {
 
-		nav.find('a').on('click', function (e) {
-			e.preventDefault();
-			$(clickedElement).toggleClass('nav-opened');
-			header.toggleClass('nav-opened');
-			nav.toggleClass('opened');
+				console.log("First JSON is fine, we are loading second JSON (you can get all data from here anyway)");
 
-			// todo: scroll
-		});
-	};
+				// get a random id from the array
+				var photo = data.photos.photo[Math.floor(Math.random() * data.photos.photo.length)];
+				owner = photo.owner;
+				ownername = photo.ownername;
 
-	App.prototype.handlePlusBtnClick = function handlePlusBtnClick(clickedElement) {
-		$(clickedElement).toggleClass('active');
-		addNewNav.fadeToggle().toggleClass('opened');
-	};
+				// mainDashboard.css({'background': 'url(' + photo.url_l + ')'});
 
-	App.prototype.handleAddNewBtnClick = function handleAddNewBtnClick(clickedElement) {
-		switch ($(clickedElement).data('target')) {
-			case 'note':
-				this.addNote();
-				break;
-			case 'counter':
-				this.addCounter();
-				break;
-			case 'todo':
-				this.addTodo();
-				break;
-			default:
-				return;
-		}
-	};
+				// console.log(photo);
 
-	// NOTES //
+				// now call the flickr API and get the picture with a nice size
+				$.getJSON("http://api.flickr.com/services/rest/", {
+					method: 'flickr.photos.getSizes',
+					api_key: API_KEY,
+					photo_id: photo.id,
+					format: 'json',
+					nojsoncallback: 1
+				}, function (response) {
+					if (response.stat == 'ok') {
+						console.log("Second JSON is fine");
 
-	App.prototype.addNote = function addNote() {
-		var data = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+						var allSizes = response.sizes.size;
+						imgSrc = allSizes[allSizes.length - 1].source;
 
-		var note = undefined;
+						var flickrImg = new FlickrImage(imgSrc, photo.owner, photo.ownername);
+						localStorage.setItem('background', JSON.stringify(flickrImg));
 
-		if (data != null) {
-			note = new _modulesNote2["default"](data.uid, data.text);
+						flickrImg.setBackground();
+					} else {
+						console.log(" The request to get the picture was not good ");
+					}
+				});
+			})();
 		} else {
-			note = new _modulesNote2["default"](this.generateId());
+			console.log(" The request to get the array was not good :( ");
 		}
+	});
+};
 
-		// set to global object
-		this.setObject('notes', note);
+var FlickrImage = (function () {
+	function FlickrImage() {
+		var url = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+		var owner = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+		var ownername = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
 
-		// update html
-		this.updateHtml(note);
+		_classCallCheck(this, FlickrImage);
 
-		note.handleUpdates(this);
+		this.url = url;
+		this.owner = owner;
+		this.ownername = ownername;
+	}
+
+	FlickrImage.prototype.setBackground = function setBackground() {
+		mainDashboard.css({ 'background': 'url(' + this.url + ')' });
+		$('.background-copyright').remove();
+		mainDashboard.append('<div class="background-copyright"><a href="https://www.flickr.com/people/' + this.owner + '" target="_blank">' + this.ownername + '</a></div>');
 	};
 
-	App.prototype.setObject = function setObject(what, e) {
-		switch (what) {
-			case 'notes':
-				this.notes[e.uid] = e;
-				localStorage.setItem(what, JSON.stringify(this.notes));
-				break;
-			case 'counters':
-				this.counters[e.uid] = e;
-				localStorage.setItem(what, JSON.stringify(this.counters));
-				break;
-			case 'todos':
-				this.todos[e.uid] = e;
-				localStorage.setItem(what, JSON.stringify(this.todos));
-				break;
-			default:
-				return;
-		}
-	};
-
-	App.prototype.removeObject = function removeObject(what, e) {
-		switch (what) {
-			case 'notes':
-				delete this.notes[e.uid];
-				localStorage.setItem(what, JSON.stringify(this.notes));
-				break;
-			case 'counters':
-				delete this.counters[e.uid];
-				localStorage.setItem(what, JSON.stringify(this.counters));
-				break;
-			case 'todos':
-				delete this.todos[e.uid];
-				localStorage.setItem(what, JSON.stringify(this.todos));
-				break;
-			default:
-				return;
-		}
-		// this.updateStorage(what);
-	};
-
-	// COUNTER //
-
-	App.prototype.addCounter = function addCounter() {
-		var data = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-
-		var counter = undefined;
-
-		if (data != null) {
-			counter = new _modulesCounter2["default"](data.uid, data.title, data.date, data.diff);
-		} else {
-			counter = new _modulesCounter2["default"](this.generateId());
-		}
-
-		// set to global object
-		this.setObject('counters', counter);
-
-		// update html
-		this.updateHtml(counter);
-
-		counter.handleUpdates(this);
-	};
-
-	App.prototype.addTodo = function addTodo() {
-		var data = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-
-		var todo = undefined;
-
-		if (data != null) {
-			todo = new _modulesTodo2["default"](data.uid, data.title, data.items);
-		} else {
-			todo = new _modulesTodo2["default"](this.generateId());
-		}
-
-		// set to global object
-		this.setObject('todos', todo);
-
-		// update html
-		this.updateHtml(todo);
-
-		todo.handleUpdates(this);
-	};
-
-	App.prototype.loadData = function loadData() {
-		var _this = this;
-
-		var notes = localStorage.getItem('notes');
-		if (notes) {
-			this.notes = JSON.parse(notes);
-			$.each(this.notes, function (key, value) {
-				return _this.addNote(value);
-			});
-		}
-		var counters = localStorage.getItem('counters');
-		if (counters) {
-			this.counters = JSON.parse(counters);
-			$.each(this.counters, function (key, value) {
-				return _this.addCounter(value);
-			});
-		}
-		var todos = localStorage.getItem('todos');
-		if (todos) {
-			this.todos = JSON.parse(todos);
-			$.each(this.todos, function (key, value) {
-				return _this.addTodo(value);
-			});
-		}
-	};
-
-	App.prototype.updateHtml = function updateHtml(el) {
-		main.append(el.render());
-	};
-
-	App.prototype.generateId = function generateId() {
-		return Math.floor(1000 + Math.random() * 9000);
-	};
-
-	App.prototype.loadSampleData = function loadSampleData() {
-
-		this.addNote({ "uid": this.generateId(), "text": "Tact is the art of making a point without making an enemy." });
-		this.addNote({ "uid": this.generateId(), "text": "What animal represents Scotland?<br>The unicorn is the national animal of Scotland. The Royal Coat of Arms of Scotland, used prior to 1603 by the Kings of Scotland was supported by two unicorns and the current royal coat of arms of the United Kingdom is supported by a unicorn for Scotland along with a lion for England." });
-
-		var dateObject = new Date(2018, 5, 21);
-		var d = new Date();
-		var diff = Math.floor((dateObject.getTime() - d.getTime()) / (1000 * 60 * 60 * 24)) + 1;
-		this.addCounter({ "uid": this.generateId(), "title": "Aerodrome Festival", "date": "21. 06. 2018", "diff": diff });
-
-		this.addTodo({ "uid": 6686, "title": "Summer plans", "items": [{ "text": "move to new apartment", "checked": false, "id": "6686-0" }, { "text": "go for holiday", "checked": false, "id": "6686-1" }, { "text": "be awesome!", "checked": true, "id": "6686-2" }] });
-
-		this.addTodo({ "uid": 2506, "title": "New clothes", "items": [{ "text": "shorts", "checked": false, "id": "2506-0" }, { "text": "skirts", "checked": false, "id": "2506-1" }, { "text": "shoes", "checked": false, "id": "2506-2" }] });
-
-		localStorage.setItem('sampleLoaded', 1);
-	};
-
-	return App;
+	return FlickrImage;
 })();
 
-exports["default"] = App;
-module.exports = exports["default"];
+module.exports = exports['default'];
 
-},{"../modules/Counter":6,"../modules/Note":7,"../modules/Todo":8}],3:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -473,7 +337,7 @@ var Counter = (function () {
 		return element;
 	};
 
-	Counter.prototype.handleUpdates = function handleUpdates(app) {
+	Counter.prototype.handleUpdates = function handleUpdates(dashboard) {
 		var _this = this;
 
 		// set elements
@@ -510,7 +374,7 @@ var Counter = (function () {
 				if (mutation.type == 'childList') {
 					_this.date = mutation.target.innerText;
 					_this.diff = daysLeft.find('span').html();
-					app.setObject('counters', _this); // update globally
+					dashboard.setObject('counters', _this); // update globally
 				}
 			});
 		});
@@ -519,13 +383,13 @@ var Counter = (function () {
 		// handle end of input
 		editable.on('input', function (e) {
 			_this.title = $(e.currentTarget).text(); // set new text
-			app.setObject('counters', _this); // update globally
+			dashboard.setObject('counters', _this); // update globally
 		});
 
 		// handle removing
 		removeBtn.on('click', function (e) {
 			element.remove(); // remove from HTML
-			app.removeObject('counters', _this); // remove globally
+			dashboard.removeObject('counters', _this); // remove globally
 		});
 	};
 
@@ -536,6 +400,262 @@ exports['default'] = Counter;
 module.exports = exports['default'];
 
 },{}],7:[function(require,module,exports){
+"use strict";
+
+exports.__esModule = true;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _Note = require("./Note");
+
+var _Note2 = _interopRequireDefault(_Note);
+
+var _Counter = require("./Counter");
+
+var _Counter2 = _interopRequireDefault(_Counter);
+
+var _Todo = require("./Todo");
+
+var _Todo2 = _interopRequireDefault(_Todo);
+
+var main = $('main'),
+    nav = $('nav'),
+    header = $('header'),
+    addNewNav = $('.add-new__choice');
+
+var Dashboard = (function () {
+	function Dashboard() {
+		_classCallCheck(this, Dashboard);
+
+		this.notes = {};
+		this.todos = {};
+		this.counters = {};
+	}
+
+	Dashboard.prototype.handleNavBtnClick = function handleNavBtnClick(clickedElement) {
+		$(clickedElement).toggleClass('nav-opened');
+		header.toggleClass('nav-opened');
+		nav.toggleClass('opened');
+
+		var notesHolder = $('#nav-notes'),
+		    todosHolder = $('#nav-todos'),
+		    countersHolder = $('#nav-counters');
+
+		if (Object.keys(this.notes).length > 0) {
+			notesHolder.html('');
+			$.each(this.notes, function (key, note) {
+				notesHolder.append('<li><a href="">' + note.text.substr(0, 20) + '</a></li>');
+			});
+		}
+
+		if (Object.keys(this.todos).length > 0) {
+			todosHolder.html('');
+			$.each(this.todos, function (key, todo) {
+				todosHolder.append('<li><a href="">' + todo.title.substr(0, 20) + '</a></li>');
+			});
+		}
+
+		if (Object.keys(this.counters).length > 0) {
+			countersHolder.html('');
+			$.each(this.counters, function (key, counter) {
+				countersHolder.append('<li><a href="">' + counter.title.substr(0, 20) + '</a></li>');
+			});
+		}
+
+		nav.find('a').on('click', function (e) {
+			e.preventDefault();
+			$(clickedElement).toggleClass('nav-opened');
+			header.toggleClass('nav-opened');
+			nav.toggleClass('opened');
+
+			// todo: scroll
+		});
+	};
+
+	Dashboard.prototype.handlePlusBtnClick = function handlePlusBtnClick(clickedElement) {
+		$(clickedElement).toggleClass('active');
+		addNewNav.fadeToggle().toggleClass('opened');
+	};
+
+	Dashboard.prototype.handleAddNewBtnClick = function handleAddNewBtnClick(clickedElement) {
+		switch ($(clickedElement).data('target')) {
+			case 'note':
+				this.addNote();
+				break;
+			case 'counter':
+				this.addCounter();
+				break;
+			case 'todo':
+				this.addTodo();
+				break;
+			default:
+				return;
+		}
+	};
+
+	// NOTES //
+
+	Dashboard.prototype.addNote = function addNote() {
+		var data = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+
+		var note = undefined;
+
+		if (data != null) {
+			note = new _Note2["default"](data.uid, data.text);
+		} else {
+			note = new _Note2["default"](this.generateId());
+		}
+
+		// set to global object
+		this.setObject('notes', note);
+
+		// update html
+		this.updateHtml(note);
+
+		note.handleUpdates(this);
+	};
+
+	Dashboard.prototype.setObject = function setObject(what, e) {
+		switch (what) {
+			case 'notes':
+				this.notes[e.uid] = e;
+				localStorage.setItem(what, JSON.stringify(this.notes));
+				break;
+			case 'counters':
+				this.counters[e.uid] = e;
+				localStorage.setItem(what, JSON.stringify(this.counters));
+				break;
+			case 'todos':
+				this.todos[e.uid] = e;
+				localStorage.setItem(what, JSON.stringify(this.todos));
+				break;
+			default:
+				return;
+		}
+	};
+
+	Dashboard.prototype.removeObject = function removeObject(what, e) {
+		switch (what) {
+			case 'notes':
+				delete this.notes[e.uid];
+				localStorage.setItem(what, JSON.stringify(this.notes));
+				break;
+			case 'counters':
+				delete this.counters[e.uid];
+				localStorage.setItem(what, JSON.stringify(this.counters));
+				break;
+			case 'todos':
+				delete this.todos[e.uid];
+				localStorage.setItem(what, JSON.stringify(this.todos));
+				break;
+			default:
+				return;
+		}
+		// this.updateStorage(what);
+	};
+
+	// COUNTER //
+
+	Dashboard.prototype.addCounter = function addCounter() {
+		var data = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+
+		var counter = undefined;
+
+		if (data != null) {
+			counter = new _Counter2["default"](data.uid, data.title, data.date, data.diff);
+		} else {
+			counter = new _Counter2["default"](this.generateId());
+		}
+
+		// set to global object
+		this.setObject('counters', counter);
+
+		// update html
+		this.updateHtml(counter);
+
+		counter.handleUpdates(this);
+	};
+
+	Dashboard.prototype.addTodo = function addTodo() {
+		var data = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+
+		var todo = undefined;
+
+		if (data != null) {
+			todo = new _Todo2["default"](data.uid, data.title, data.items);
+		} else {
+			todo = new _Todo2["default"](this.generateId());
+		}
+
+		// set to global object
+		this.setObject('todos', todo);
+
+		// update html
+		this.updateHtml(todo);
+
+		todo.handleUpdates(this);
+	};
+
+	Dashboard.prototype.loadData = function loadData() {
+		var _this = this;
+
+		var notes = localStorage.getItem('notes');
+		if (notes) {
+			this.notes = JSON.parse(notes);
+			$.each(this.notes, function (key, value) {
+				return _this.addNote(value);
+			});
+		}
+		var counters = localStorage.getItem('counters');
+		if (counters) {
+			this.counters = JSON.parse(counters);
+			$.each(this.counters, function (key, value) {
+				return _this.addCounter(value);
+			});
+		}
+		var todos = localStorage.getItem('todos');
+		if (todos) {
+			this.todos = JSON.parse(todos);
+			$.each(this.todos, function (key, value) {
+				return _this.addTodo(value);
+			});
+		}
+	};
+
+	Dashboard.prototype.updateHtml = function updateHtml(el) {
+		main.append(el.render());
+	};
+
+	Dashboard.prototype.generateId = function generateId() {
+		return Math.floor(1000 + Math.random() * 9000);
+	};
+
+	Dashboard.prototype.loadSampleData = function loadSampleData() {
+
+		this.addNote({ "uid": this.generateId(), "text": "Tact is the art of making a point without making an enemy." });
+		this.addNote({ "uid": this.generateId(), "text": "What animal represents Scotland?<br>The unicorn is the national animal of Scotland. The Royal Coat of Arms of Scotland, used prior to 1603 by the Kings of Scotland was supported by two unicorns and the current royal coat of arms of the United Kingdom is supported by a unicorn for Scotland along with a lion for England." });
+
+		var dateObject = new Date(2018, 5, 21);
+		var d = new Date();
+		var diff = Math.floor((dateObject.getTime() - d.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+		this.addCounter({ "uid": this.generateId(), "title": "Aerodrome Festival", "date": "21. 06. 2018", "diff": diff });
+
+		this.addTodo({ "uid": 6686, "title": "Summer plans", "items": [{ "text": "move to new apartment", "checked": false, "id": "6686-0" }, { "text": "go for holiday", "checked": false, "id": "6686-1" }, { "text": "be awesome!", "checked": true, "id": "6686-2" }] });
+
+		this.addTodo({ "uid": 2506, "title": "New clothes", "items": [{ "text": "shorts", "checked": false, "id": "2506-0" }, { "text": "skirts", "checked": false, "id": "2506-1" }, { "text": "shoes", "checked": false, "id": "2506-2" }] });
+
+		localStorage.setItem('sampleLoaded', 1);
+	};
+
+	return Dashboard;
+})();
+
+exports["default"] = Dashboard;
+module.exports = exports["default"];
+
+},{"./Counter":6,"./Note":8,"./Todo":9}],8:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -563,7 +683,7 @@ var Note = (function () {
 		return element;
 	};
 
-	Note.prototype.handleUpdates = function handleUpdates(app) {
+	Note.prototype.handleUpdates = function handleUpdates(dashboard) {
 		var _this = this;
 
 		// set elements
@@ -577,13 +697,13 @@ var Note = (function () {
 		// handle end of input
 		editable.on('input', function (e) {
 			_this.text = $(e.currentTarget).text(); // set new text
-			app.setObject('notes', _this); // update globally
+			dashboard.setObject('notes', _this); // update globally
 		});
 
 		// handle removing
 		removeBtn.on('click', function (e) {
 			element.remove(); // remove from HTML
-			app.removeObject('notes', _this); // remove globally
+			dashboard.removeObject('notes', _this); // remove globally
 		});
 	};
 
@@ -593,7 +713,7 @@ var Note = (function () {
 exports['default'] = Note;
 module.exports = exports['default'];
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -648,7 +768,7 @@ var Todo = (function () {
 		return element;
 	};
 
-	Todo.prototype.handleUpdates = function handleUpdates(app) {
+	Todo.prototype.handleUpdates = function handleUpdates(dashboard) {
 		var _this3 = this;
 
 		// set elements
@@ -663,13 +783,13 @@ var Todo = (function () {
 		// handle end of input
 		editable.on('input', function (e) {
 			_this3.title = $(e.currentTarget).text(); // set new text
-			app.setObject('todos', _this3); // update globally
+			dashboard.setObject('todos', _this3); // update globally
 		});
 
 		// handle removing
 		removeBtn.on('click', function (e) {
 			element.remove(); // remove from HTML
-			app.removeObject('todos', _this3); // remove globally
+			dashboard.removeObject('todos', _this3); // remove globally
 		});
 
 		// handle adding new todoItem
@@ -678,14 +798,14 @@ var Todo = (function () {
 			var input = form.find("input");
 			var todoText = input.val();
 			input.val('');
-			_this3.addItem(app, todoText);
-			app.setObject('todos', _this3); // update globally
+			_this3.addItem(dashboard, todoText);
+			dashboard.setObject('todos', _this3); // update globally
 		});
 
 		this.items.forEach(function (i) {
 			// handle checking items
 			$("#item" + i.id).on('click', function (e) {
-				_this3.updateCheckedState(i, app);
+				_this3.updateCheckedState(i, dashboard);
 			});
 
 			// handle removing items
@@ -696,7 +816,7 @@ var Todo = (function () {
 					return e.id != i.id;
 				});
 
-				app.setObject('todos', _this3); // update globally
+				dashboard.setObject('todos', _this3); // update globally
 
 				// remove from HTML
 				$(e.target.parentElement).remove();

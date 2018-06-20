@@ -16,7 +16,7 @@ export default class Note {
 		return element;
 	}
 
-	handleUpdates(app) {
+	handleUpdates(dashboard) {
 
 		// set elements
 		let element = $('#note-' + this.uid);
@@ -29,13 +29,13 @@ export default class Note {
 		// handle end of input
 		editable.on('input', (e) => {
 			this.text = $(e.currentTarget).text(); // set new text
-			app.setObject('notes', this); // update globally
+			dashboard.setObject('notes', this); // update globally
 		});
 
 		// handle removing
 		removeBtn.on('click', (e) => {
 			element.remove(); // remove from HTML
-			app.removeObject('notes', this); // remove globally
+			dashboard.removeObject('notes', this); // remove globally
 		})
 	}
 }

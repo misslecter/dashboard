@@ -52,6 +52,7 @@
 
 <main id="dashboard">
     <div class="add-new">
+        <a href="#" id="refreshBg">refresh</a>
         <div class="add-new__choice">
             <ul>
                 <li><a href="" data-target="note">Note</a></li>

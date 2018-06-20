@@ -1,8 +1,9 @@
-import Svg from "./app/Svg";
-import Form from "./app/Form";
+import Svg from "./app/svg";
+import Form from "./app/form";
 import Time from "./app/time";
+import Background from "./app/flickr";
 
-import App from "./app/App";
+import Dashboard from "./modules/Dashboard";
 
 const menuBtn = $('header button'),
 	plusBtn = $('.add-new button'),
@@ -11,14 +12,17 @@ const menuBtn = $('header button'),
 
 $(document).ready(() => {
 
-	const app = new App();
+	Background();
+
+
+	const dashboard = new Dashboard();
 
 	// set visible
 	if(localStorage.getItem('welcomeClosed') == 1) {
 		location.hash = location.hash == '' ? '#dashboard' : location.hash;
 
 		// Load data from LS
-		app.loadData();
+		dashboard.loadData();
 	} else {
 		location.hash = '#welcome';
 	}
@@ -28,20 +32,20 @@ $(document).ready(() => {
 		localStorage.setItem('welcomeClosed', 1);
 
 		if(localStorage.getItem('sampleLoaded') != 1 && $(e.currentTarget).hasClass('sample')) {
-			app.loadSampleData();
+			dashboard.loadSampleData();
 		}
 	});
 
 	// Open navigation
-	menuBtn.click((e) => app.handleNavBtnClick(e.currentTarget));
+	menuBtn.click((e) => dashboard.handleNavBtnClick(e.currentTarget));
 
 	// Show add new menu
-	plusBtn.click((e) => app.handlePlusBtnClick(e.currentTarget));
+	plusBtn.click((e) => dashboard.handlePlusBtnClick(e.currentTarget));
 
 	// Handle adding new stuff
 	addNewBtns.map((index, el) => $(el).click((e) => {
 		e.preventDefault();
-		app.handleAddNewBtnClick(e.currentTarget)
+		dashboard.handleAddNewBtnClick(e.currentTarget)
 	}));
 
 	Svg();

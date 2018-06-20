@@ -36,7 +36,7 @@ export default class Todo {
 		return element;
 	}
 
-	handleUpdates(app) {
+	handleUpdates(dashboard) {
 
 		// set elements
 		let element = $('#todo-' + this.uid);
@@ -50,13 +50,13 @@ export default class Todo {
 		// handle end of input
 		editable.on('input', (e) => {
 			this.title = $(e.currentTarget).text(); // set new text
-			app.setObject('todos', this); // update globally
+			dashboard.setObject('todos', this); // update globally
 		});
 
 		// handle removing
 		removeBtn.on('click', (e) => {
 			element.remove(); // remove from HTML
-			app.removeObject('todos', this); // remove globally
+			dashboard.removeObject('todos', this); // remove globally
 		});
 
 		// handle adding new todoItem
@@ -65,14 +65,14 @@ export default class Todo {
 			let input = form.find("input");
 			let todoText = input.val();
 			input.val('');
-			this.addItem(app, todoText);
-			app.setObject('todos', this); // update globally
+			this.addItem(dashboard, todoText);
+			dashboard.setObject('todos', this); // update globally
 		});
 
 		this.items.forEach((i) => {
 			// handle checking items
 			$("#item" + i.id).on('click', (e) => {
-				this.updateCheckedState(i, app);
+				this.updateCheckedState(i, dashboard);
 			});
 
 			// handle removing items
@@ -83,7 +83,7 @@ export default class Todo {
 					return e.id != i.id;
 				});
 
-				app.setObject('todos', this); // update globally
+				dashboard.setObject('todos', this); // update globally
 
 				// remove from HTML
 				$(e.target.parentElement).remove();

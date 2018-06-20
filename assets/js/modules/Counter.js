@@ -28,7 +28,7 @@ export default class Counter {
 		return element;
 	}
 
-	handleUpdates(app) {
+	handleUpdates(dashboard) {
 
 		// set elements
 		let element = $('#counter-' + this.uid);
@@ -65,7 +65,7 @@ export default class Counter {
 				if(mutation.type == 'childList') {
 					this.date = mutation.target.innerText;
 					this.diff = daysLeft.find('span').html();
-					app.setObject('counters', this); // update globally
+					dashboard.setObject('counters', this); // update globally
 				}
 			});
 		});
@@ -74,13 +74,13 @@ export default class Counter {
 		// handle end of input
 		editable.on('input', (e) => {
 			this.title = $(e.currentTarget).text(); // set new text
-			app.setObject('counters', this); // update globally
+			dashboard.setObject('counters', this); // update globally
 		});
 
 		// handle removing
 		removeBtn.on('click', (e) => {
 			element.remove(); // remove from HTML
-			app.removeObject('counters', this); // remove globally
+			dashboard.removeObject('counters', this); // remove globally
 		})
 	}
 }

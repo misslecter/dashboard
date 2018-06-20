@@ -90,3 +90,23 @@ svg {
 		color: $pink;
 	}
 }
+
+.background-copyright {
+	position: absolute;
+	bottom: 1em;
+	z-index: 10;
+	color: white;
+}
+
+.loading {
+	&::after {
+		content: 'Loading...';
+		position: absolute;
+		width: 100vw;
+		height: 100vh;
+		top: 0;
+		left: 0;
+		z-index: 10;
+		background: #967290;
+	}
+}

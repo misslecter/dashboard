@@ -1,7 +1,9 @@
 main {
 
-	background-size: cover;
-	background: url('../images/bg.png') 50%;
+	background: url('../images/bg.png');
+
+	background-size: cover !important;
+	background-position: 50% !important;
 
 	padding-top: $header-height;
 	min-height: 100vh;
