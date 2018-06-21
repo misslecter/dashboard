@@ -62,6 +62,12 @@
 
 		min-width: 30em;
 
+		@media (max-width: $screen-sm-max) {
+			min-width: 0;
+			width: 100%;
+			top: 61px;
+		}
+
 		h2 {
 			font-weight: 300;
 			text-align: center;

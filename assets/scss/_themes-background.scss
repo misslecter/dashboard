@@ -8,6 +8,10 @@
 				span {
 					background: #fff !important;
 				}
+
+				@media (max-width: $screen-sm-max) {
+					background: rgba(0, 0, 0, 0.7);
+				}
 			}
 
 			&::after {
@@ -26,6 +30,12 @@
 		}
 
 		&-light {
+
+			header {
+				@media (max-width: $screen-sm-max) {
+					background: rgba(#fff, 0.7);
+				}
+			}
 
 			&::after {
 				background: rgb(255,255,255);
@@ -85,6 +95,7 @@ body {
 	z-index: 3;
 	width: 100%;
 	color: #fff;
+	left: 0;
 
 	a {
 		color: #fff;

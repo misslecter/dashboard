@@ -114,7 +114,6 @@ $(document).ready(() => {
 
 const updateAppBackground = () => {
 
-
 	let appBg = localStorage.getItem('app-background'),
 		appTheme = localStorage.getItem('app-theme');
 

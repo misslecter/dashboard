@@ -17,7 +17,7 @@ header {
 	transition: $transition;
 
 	@media (max-width: $screen-sm-max) {
-		background: rgba(#fff, 0.8);
+		//background: rgba(#fff, 0.8);
 		padding: 1.5em 2em;
 		height: auto;
 	}
@@ -29,7 +29,7 @@ header {
 			padding-left: 2em;
 			justify-content: flex-end;
 
-			.link {
+			.link, .settings {
 				display: none;
 			}
 		}
