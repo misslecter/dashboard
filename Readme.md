@@ -41,7 +41,7 @@ CSS3 transitions/animations | :white_check_mark: | [všude stejná](https://gith
 Media queries | :white_check_mark: | [bez nich se nedá žít](https://github.com/misslecter/dashboard/blob/ca1009468aa346791d425044cf8bd38362c93505/assets/scss/modules/module.scss#L11)
 OOP přístup | :white_check_mark: | například, [každý modul má svou classu](https://github.com/misslecter/dashboard/tree/master/assets/js/modules)
 Použití JS frameworku či knihovny | :white_check_mark: | jQuery
-Použití pokročilých JS API | :white_check_mark: | Grunt, Babelify, Browserify
+Použití pokročilých JS API | :white_check_mark: | Grunt, Babelify, Browserify + :bell: UPDATE: Flickr API
 Funkční historie | :white_check_mark: | hashtagová navidace mezi stránkami. Aktivní stránka se zobrazí [pomocí CSS](https://github.com/misslecter/dashboard/blob/ca1009468aa346791d425044cf8bd38362c93505/assets/scss/_defaults.scss#L33)
 Ovládání medií | :cry: | 
 Offline aplikace | :eight_spoked_asterisk: | LocalStorage funguje offline, ale není tam žádný manifest
