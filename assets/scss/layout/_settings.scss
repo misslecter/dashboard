@@ -1,0 +1,254 @@
+.settings {
+
+	.open-settings-menu {
+		width: 30px;
+		height: 25px;
+		position: relative;
+		display: block;
+
+		span {
+			width: 5px;
+			height: 5px;
+			background: #000;
+			display: block;
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%) rotate(0deg);
+			transition: all 0.25s ease-in-out;
+
+			&:nth-child(2) {
+				top: 10px;
+			}
+
+			&:nth-child(3) {
+				top: 20px;
+			}
+		}
+
+		&:hover {
+			span {
+				background: $accent-color;
+			}
+		}
+
+		&.menu-opened {
+			span {
+				&:first-child, &:last-child {
+					width: 100%;
+					top: 10px;
+					left: 0;
+				}
+
+				&:first-child {
+					transform: rotate(45deg);
+				}
+
+				&:last-child {
+					transform: rotate(-45deg);
+				}
+			}
+		}
+
+	}
+
+	&-menu {
+		display: none;
+		position: absolute;
+		right: 0;
+		top: $header-height;
+
+		background: $nav-bg;
+		color: #fff;
+
+		min-width: 30em;
+
+		h2 {
+			font-weight: 300;
+			text-align: center;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+		}
+
+		input[type='checkbox'], input[type='checkbox']:active {
+			position: absolute;
+			height: 0;
+			width: 0;
+			opacity: 0;
+			border: none;
+			outline: none;
+
+			+ label {
+				display: block;
+				position: relative;
+				padding: 10px;
+				font-size: 12px;
+				line-height: 16px;
+				width: 70px;
+				height: 36px;
+				margin: 2em auto;
+				/*border-radius*/
+				-webkit-border-radius: 18px;
+				-moz-border-radius: 18px;
+				border-radius: 18px;
+				background: lighten($nav-bg, 10%);
+				cursor: pointer;
+
+				&, &:before, &:after {
+					-webkit-transition:.25s ease-in-out;
+					-moz-transition:.25s ease-in-out;
+					-o-transition:.25s ease-in-out;
+					transition:.25s ease-in-out;
+				}
+
+				&:before {
+					content: '';
+					display: block;
+					position: absolute;
+					z-index: 1;
+					line-height: 34px;
+					text-indent: 40px;
+					height: 36px;
+					width: 36px;
+					/*border-radius*/
+					-webkit-border-radius: 100%;
+					-moz-border-radius: 100%;
+					border-radius: 100%;
+					top: 0px;
+					left: 0px;
+					right: auto;
+					background: white;
+				}
+
+				&:after {
+					content: attr(data-light);
+					display: block;
+					position: absolute;
+					z-index: 0;
+					top: 0;
+					right: 100%;
+					padding: 10px;
+					color: #ffffff;
+					white-space: nowrap;
+					text-transform: uppercase;
+					font-weight: 700;
+					font-size: 1.4em;
+				}
+			}
+
+			&:checked + label {
+				background: darken($nav-bg, 10%);
+
+				&:before {
+					left:calc(100% - 36px);
+				}
+
+				&:after {
+					content:attr(data-dark);
+					right: -100%;
+					color: #fff;
+				}
+			}
+		}
+
+		input[type='radio'] {
+			position: absolute;
+			opacity: 0;
+
+			+ label {
+				text-transform: uppercase;
+				font-weight: 700;
+				background: transparent;
+				transition: $transition;
+				padding: 1em 2em;
+				display: block;
+				width: 100%;
+
+				&:hover {
+					cursor: pointer;
+					background: darken($nav-bg, 10%);
+				}
+
+				> a {
+					float: right;
+					text-transform: none;
+					text-decoration: none;
+					font-weight: 300;
+					color: #ffc107;
+					opacity: .3;
+					border-bottom: 1px solid;
+
+					&::after {
+
+					}
+
+					&:hover {
+						border-bottom-color: transparent;
+					}
+				}
+
+				> input[type="file"] {
+					width: 0.1px;
+					height: 0.1px;
+					opacity: 0;
+					overflow: hidden;
+					position: absolute;
+					z-index: -1;
+
+					+ label {
+						opacity: 1;
+						float: right;
+						text-transform: none;
+						font-weight: 300;
+						color: #ffc107;
+						border-bottom: 1px solid;
+						&:hover {
+							cursor: pointer;
+							border-bottom-color: transparent;
+						}
+					}
+
+					&:disabled + label {
+						opacity: .3;
+					}
+				}
+			}
+
+			&:checked + label {
+
+				&::before {
+					content: '';
+					width: 10px;
+					height: 10px;
+					border-radius: 50%;
+					background: $pink;
+					display: inline-block;
+					position: relative;
+					margin-right: .5em;
+				}
+
+				> a {
+					opacity: 1;
+				}
+			}
+		}
+
+		> div {
+			border-bottom: 1px solid rgba(white, .3);
+			padding-bottom: 1px;
+
+			> a {
+				color: #fff;
+				text-transform: uppercase;
+				font-weight: 700;
+				text-decoration: none;
+				padding: 1em 2em;
+				display: block;
+
+				&:hover {
+					background: darken($nav-bg, 10%);
+				}
+			}
+		}
+	}
+
+}

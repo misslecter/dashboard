@@ -6,11 +6,11 @@ const mainDashboard = $('main');
 let imgSrc, owner, ownername;
 
 const init = () => {
-	let savedBg = localStorage.getItem('background');
-	if(savedBg == null) {
+	let savedBgFlickr = localStorage.getItem('background-flickr');
+	if(savedBgFlickr == null) {
 		getData();
 	} else {
-		let bg = JSON.parse(savedBg);
+		let bg = JSON.parse(savedBgFlickr);
 		let fi = new FlickrImage(bg.url, bg.owner, bg.ownername);
 		fi.setBackground();
 	}
@@ -71,7 +71,7 @@ const getData = () => {
 							imgSrc = allSizes[allSizes.length - 1].source;
 
 							let flickrImg = new FlickrImage(imgSrc, photo.owner, photo.ownername);
-							localStorage.setItem('background', JSON.stringify(flickrImg));
+							localStorage.setItem('background-flickr', JSON.stringify(flickrImg));
 
 							flickrImg.setBackground();
 						}
@@ -99,6 +99,6 @@ class FlickrImage {
 	setBackground() {
 		mainDashboard.css({'background': 'url(' + this.url + ')'});
 		$('.background-copyright').remove();
-		mainDashboard.append('<div class="background-copyright"><a href="https://www.flickr.com/people/'+ this.owner + '" target="_blank">' + this.ownername + '</a></div>')
+		mainDashboard.append('<div class="background-copyright"><p>Photo by <a href="https://www.flickr.com/people/'+ this.owner + '" target="_blank">' + this.ownername + '</a></p></div>')
 	}
 }

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="./assets/css/app.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
-<body>
+<body class="app-background-default">
 
 <header>
     <button>
@@ -19,8 +19,44 @@
 
     <div class="clock"></div>
 
-    <div class="link">
-        <a href="#contact" class="link-contact">Contact us</a>
+    <!--    <a href="#" id="test">Change</a>-->
+    <!---->
+    <!--    <div class="link">-->
+    <!--        <a href="#contact" class="link-contact">Contact us</a>-->
+    <!--    </div>-->
+
+    <div class="settings">
+        <a href="#" class="open-settings-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </a>
+        <div class="settings-menu">
+            <div>
+                <h2>App theme</h2>
+                <input type="checkbox" id="app-theme-selector" checked/>
+                <label for="app-theme-selector" data-light="light" data-dark="dark"></label>
+            </div>
+            <div>
+                <h2>Background</h2>
+                <input type="radio" id="app-background-default" name="app-background-selector">
+                <label for="app-background-default" class="app-background-change">Default</label>
+                <input type="radio" id="app-background-flickr" name="app-background-selector">
+                <label for="app-background-flickr" class="app-background-change">
+                    Flickr
+                    <a href="#" id="refreshBg" class="disabled">refresh</a>
+                </label>
+                <input type="radio" id="app-background-custom" name="app-background-selector">
+                <label for="app-background-custom" class="app-background-change">
+                    Custom
+                    <input type="file" id="file-selector" disabled>
+                    <label for="file-selector">choose image</label>
+                </label>
+            </div>
+            <div>
+                <a href="#contact" class="link-contact">Contact us</a>
+            </div>
+        </div>
     </div>
 </header>
 
@@ -52,7 +88,6 @@
 
 <main id="dashboard">
     <div class="add-new">
-        <a href="#" id="refreshBg">refresh</a>
         <div class="add-new__choice">
             <ul>
                 <li><a href="" data-target="note">Note</a></li>

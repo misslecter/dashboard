@@ -26,11 +26,61 @@ var _modulesDashboard2 = _interopRequireDefault(_modulesDashboard);
 var menuBtn = $('header button'),
     plusBtn = $('.add-new button'),
     addNewBtns = $('.add-new__choice a'),
-    link = $('header .link a');
+    link = $('header .link a'),
+    main = $('main'),
+    fileInput = $('#file-selector'),
+    refreshLink = $('#refreshBg'),
+    b = $('body');
 
 $(document).ready(function () {
 
-	_appFlickr2["default"]();
+	updateAppBackground();
+
+	$('#app-theme-selector + label').click(function (e) {
+		if ($('#app-theme-selector').is(':checked')) {
+			// switch to light
+			localStorage.setItem('app-theme', 'app-theme-light');
+			b.removeClass('app-theme-dark').addClass('app-theme-light');
+		} else {
+			localStorage.setItem('app-theme', 'app-theme-dark');
+			b.removeClass('app-theme-light').addClass('app-theme-dark');
+		}
+	});
+
+	$('.app-background-change').click(function (e) {
+		var selectedTheme = $(e.currentTarget).attr('for');
+		localStorage.setItem('app-background', selectedTheme);
+
+		fileInput.prop('disabled', !(selectedTheme == 'app-background-custom'));
+		refreshLink.toggleClass('disabled', !(selectedTheme == 'app-background-flickr'));
+
+		updateAppBackground();
+	});
+
+	fileInput.on('change', function (event) {
+		var img = event.target.files[0];
+		console.log(img);
+
+		// Only process image files.
+		if (!img.type.match('image.*')) return;
+
+		var reader = new FileReader();
+		reader.onload = (function (theFile) {
+			return function (e) {
+				localStorage.setItem('background-custom', e.target.result);
+				updateAppBackground();
+			};
+		})(img);
+
+		// Read in the image file as a data URL.
+		reader.readAsDataURL(img);
+	});
+
+	$(".open-settings-menu").click(function (e) {
+		e.preventDefault();
+		$(e.currentTarget).toggleClass('menu-opened');
+		$(".settings-menu").toggle();
+	});
 
 	var dashboard = new _modulesDashboard2["default"]();
 
@@ -76,6 +126,34 @@ $(document).ready(function () {
 	_appTime2["default"]();
 });
 
+var updateAppBackground = function updateAppBackground() {
+
+	var appBg = localStorage.getItem('app-background'),
+	    appTheme = localStorage.getItem('app-theme');
+
+	if (appBg == null) appBg = 'app-background-default';
+	if (appTheme == null) appTheme = 'app-theme-light';
+
+	if (appBg == 'app-background-flickr') {
+		_appFlickr2["default"]();
+	} else if (appBg == 'app-background-default') {
+		main.removeAttr('style');
+	} else if (appBg == 'app-background-custom') {
+
+		var img = localStorage.getItem('background-custom');
+		if (img == null) return;
+
+		main.css({ 'background': 'url(' + img + ')' });
+		fileInput.prop('disabled', false);
+	}
+
+	b.removeAttr("class");
+	b.addClass(appBg);
+	b.addClass(appTheme);
+	$('#' + appBg).prop("checked", true);
+	$('#app-theme-selector').prop("checked", appTheme == 'app-theme-dark');
+};
+
 },{"./app/flickr":2,"./app/form":3,"./app/svg":4,"./app/time":5,"./modules/Dashboard":7}],2:[function(require,module,exports){
 'use strict';
 
@@ -93,11 +171,11 @@ var imgSrc = undefined,
     ownername = undefined;
 
 var init = function init() {
-	var savedBg = localStorage.getItem('background');
-	if (savedBg == null) {
+	var savedBgFlickr = localStorage.getItem('background-flickr');
+	if (savedBgFlickr == null) {
 		getData();
 	} else {
-		var bg = JSON.parse(savedBg);
+		var bg = JSON.parse(savedBgFlickr);
 		var fi = new FlickrImage(bg.url, bg.owner, bg.ownername);
 		fi.setBackground();
 	}
@@ -152,7 +230,7 @@ var getData = function getData() {
 						imgSrc = allSizes[allSizes.length - 1].source;
 
 						var flickrImg = new FlickrImage(imgSrc, photo.owner, photo.ownername);
-						localStorage.setItem('background', JSON.stringify(flickrImg));
+						localStorage.setItem('background-flickr', JSON.stringify(flickrImg));
 
 						flickrImg.setBackground();
 					} else {
@@ -182,7 +260,7 @@ var FlickrImage = (function () {
 	FlickrImage.prototype.setBackground = function setBackground() {
 		mainDashboard.css({ 'background': 'url(' + this.url + ')' });
 		$('.background-copyright').remove();
-		mainDashboard.append('<div class="background-copyright"><a href="https://www.flickr.com/people/' + this.owner + '" target="_blank">' + this.ownername + '</a></div>');
+		mainDashboard.append('<div class="background-copyright"><p>Photo by <a href="https://www.flickr.com/people/' + this.owner + '" target="_blank">' + this.ownername + '</a></p></div>');
 	};
 
 	return FlickrImage;

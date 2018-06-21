@@ -40,6 +40,7 @@ ul {
 
 * {
 	box-sizing: border-box;
+	z-index: 2;
 }
 
 [contenteditable] {
@@ -91,12 +92,7 @@ svg {
 	}
 }
 
-.background-copyright {
-	position: absolute;
-	bottom: 1em;
-	z-index: 10;
-	color: white;
-}
+
 
 .loading {
 	&::after {

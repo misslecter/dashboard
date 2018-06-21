@@ -43,18 +43,4 @@ header {
 			display: none;
 		}
 	}
-
-	a {
-		text-decoration: none;
-		color: #fff;
-		font-weight: 700;
-		transition: $transition;
-		background: $text-color;
-		padding: .5em 1em;
-
-		&:hover {
-			color: $accent-color;
-			text-decoration: none;
-		}
-	}
 }
