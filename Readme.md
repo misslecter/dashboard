@@ -4,6 +4,9 @@ Semestrální práce z předmětu **Vývoj klientských aplikací v Javascriptu*
 
 [Live verze](http://anastasiasurikova.com/dashboard/)
 
+#### :bell: UPDATE
+Než se semetrálka ohodnotila, přidaly se do ní nové funkce. Konkrétně napojení na Flickr API a nahrání vlastní fotky do pozadí. Viz live verze: [http://anastasiasurikova.com/dashboard/beta](http://anastasiasurikova.com/dashboard/beta) (tlačítko v horním pravém rohu)
+
 ## Použité technologie
 * SASS
     * kompilace do CSS pomocí Grunt skriptu
