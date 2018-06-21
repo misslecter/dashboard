@@ -181,7 +181,10 @@ var init = function init() {
 	}
 
 	$('#refreshBg').on('click', function (e) {
+
+		console.log('click');
 		e.preventDefault();
+		e.stopPropagation();
 		getData();
 	});
 };
@@ -197,7 +200,7 @@ var getData = function getData() {
 		format: 'json',
 		nojsoncallback: 1,
 		extras: "description, license, date_upload, date_taken, owner_name, icon_server, original_format, last_update, geo, tags, machine_tags, o_dims, views, media, path_alias, url_sq, url_t, url_s, url_q, url_m, url_n, url_z, url_c, url_l, url_o",
-		per_page: 100 // you can increase this to get a bigger array
+		per_page: 100
 	}, function (data) {
 
 		// if everything went good
