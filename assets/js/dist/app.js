@@ -308,7 +308,7 @@ var App = (function () {
 		this.addNote({ "uid": this.generateId(), "text": "Tact is the art of making a point without making an enemy." });
 		this.addNote({ "uid": this.generateId(), "text": "What animal represents Scotland?<br>The unicorn is the national animal of Scotland. The Royal Coat of Arms of Scotland, used prior to 1603 by the Kings of Scotland was supported by two unicorns and the current royal coat of arms of the United Kingdom is supported by a unicorn for Scotland along with a lion for England." });
 
-		var dateObject = new Date(2018, 5, 21);
+		var dateObject = new Date(2031, 5, 21);
 		var d = new Date();
 		var diff = Math.floor((dateObject.getTime() - d.getTime()) / (1000 * 60 * 60 * 24)) + 1;
 		this.addCounter({ "uid": this.generateId(), "title": "Aerodrome Festival", "date": "21. 06. 2018", "diff": diff });
